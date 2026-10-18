@@ -23,6 +23,16 @@
     "Sinhala",
     "Tamil",
     "Trincomalee",
-    "wordmark"
-  ]
+    "wordmark",
+    "ehthumbs",
+    "xcconfig",
+    "podspec",
+    "pycache",
+    "venv",
+    "pytest",
+    "mypy",
+    "htmlcov"
+  ],
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
