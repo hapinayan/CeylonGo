@@ -1,0 +1,68 @@
+<div class="cg-homestays-block">
+  <!-- Section Header -->
+  <div class="cg-block-header">
+    <div class="cg-block-header-left">
+      <h2 class="cg-block-title">Featured Homestays</h2>
+      <p class="cg-block-subtitle">Stay with local families and experience authentic Sri Lankan hospitality</p>
+    </div>
+    <a routerLink="/homestays" class="cg-block-view-all">
+      <span>View All Homestays</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12" />
+        <polyline points="12 5 19 12 12 19" />
+      </svg>
+    </a>
+  </div>
+
+  <!-- Cards Grid (4 cards) -->
+  <div class="cg-homestays-grid">
+    @for (stay of homestays; track stay.id) {
+      <div class="cg-homestay-card">
+        <div class="cg-stay-img-wrap">
+          <img [src]="stay.imageUrl" [alt]="stay.name + ' in ' + stay.location" class="cg-stay-img" loading="lazy" />
+          <button
+            type="button"
+            class="cg-fav-btn"
+            [class.active]="stay.isFavorite"
+            (click)="toggleFavorite(stay, $event)"
+            [attr.aria-label]="'Save ' + stay.name + ' to favorites'"
+          >
+            <svg viewBox="0 0 24 24" [attr.fill]="stay.isFavorite ? '#ef4444' : 'none'" stroke="currentColor" stroke-width="2">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="cg-stay-body">
+          <h3 class="cg-stay-title">{{ stay.name }}</h3>
+          <div class="cg-stay-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>{{ stay.location }}</span>
+          </div>
+
+          <div class="cg-stay-rating">
+            <span class="cg-star">★</span>
+            <span class="cg-rating-score">{{ stay.rating }}</span>
+            <span class="cg-rating-count">({{ stay.reviewCount }})</span>
+          </div>
+
+          <div class="cg-stay-footer">
+            <div class="cg-stay-price-wrap">
+              <span class="cg-price-prefix">From</span>
+              <span class="cg-price-val">LKR {{ stay.priceLkr | number }}</span>
+            </div>
+            <a [routerLink]="['/homestays', stay.id]" class="cg-stay-arrow-btn" [attr.aria-label]="'View ' + stay.name">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
