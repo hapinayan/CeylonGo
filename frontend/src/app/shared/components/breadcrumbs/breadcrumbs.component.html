@@ -1,0 +1,33 @@
+<nav class="cg-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="cg-breadcrumbs__list">
+    @if (showHome()) {
+      <li class="cg-breadcrumbs__item">
+        <a routerLink="/" class="cg-breadcrumbs__link cg-breadcrumbs__link--home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span class="cg-sr-only">Home</span>
+        </a>
+        <svg class="cg-breadcrumbs__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </li>
+    }
+
+    @for (item of items(); track item.label; let last = $last) {
+      <li class="cg-breadcrumbs__item" [attr.aria-current]="last ? 'page' : null">
+        @if (!last && item.url) {
+          <a [routerLink]="item.url" class="cg-breadcrumbs__link">
+            {{ item.label }}
+          </a>
+          <svg class="cg-breadcrumbs__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        } @else {
+          <span class="cg-breadcrumbs__current">{{ item.label }}</span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

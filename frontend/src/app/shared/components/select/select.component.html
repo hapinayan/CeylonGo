@@ -1,0 +1,77 @@
+<div
+  class="cg-select-group"
+  [class.cg-select-group--error]="!!errorMessage()"
+  [class.cg-select-group--disabled]="disabled()"
+  [class.cg-select-group--open]="isOpen()"
+>
+  @if (label()) {
+    <label [for]="selectId()" class="cg-select-label">
+      {{ label() }}
+      @if (required()) {
+        <span class="cg-select-label__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="cg-select-wrapper">
+    <button
+      type="button"
+      [id]="selectId()"
+      class="cg-select-trigger"
+      (click)="toggleDropdown()"
+      [disabled]="disabled()"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-haspopup]="'listbox'"
+    >
+      <span class="cg-select-value" [class.cg-select-value--placeholder]="!selectedOption">
+        {{ selectedOption?.label || placeholder() }}
+      </span>
+      <svg
+        class="cg-chevron-icon"
+        [class.cg-chevron-icon--rotated]="isOpen()"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+
+    @if (isOpen()) {
+      <div class="cg-select-dropdown" role="listbox">
+        @for (opt of options(); track opt.value) {
+          <button
+            type="button"
+            class="cg-select-option"
+            [class.cg-select-option--selected]="opt.value === value()"
+            [class.cg-select-option--disabled]="opt.disabled"
+            (click)="selectOption(opt)"
+            role="option"
+            [attr.aria-selected]="opt.value === value()"
+            [disabled]="opt.disabled"
+          >
+            @if (opt.icon) {
+              <span class="cg-select-option__icon">{{ opt.icon }}</span>
+            }
+            <span class="cg-select-option__label">{{ opt.label }}</span>
+            @if (opt.value === value()) {
+              <svg class="cg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="cg-select-error" role="alert">
+      {{ errorMessage() }}
+    </p>
+  }
+</div>

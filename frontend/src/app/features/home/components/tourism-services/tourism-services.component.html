@@ -1,0 +1,60 @@
+<section class="cg-services-section">
+  <div class="cg-container">
+    <div class="cg-services-header">
+      <h2 class="cg-services-title">Local Tourism Services</h2>
+      <p class="cg-services-subtitle">Everything you need for a smooth and enjoyable journey</p>
+    </div>
+
+    <div class="cg-services-grid">
+      @for (serv of services; track serv.id) {
+        <a [routerLink]="['/local-services', serv.id]" class="cg-service-card">
+          <div class="cg-service-icon-box" [style.background-color]="serv.iconBg" [style.color]="serv.iconColor">
+            @switch (serv.icon) {
+              @case ('guide') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              }
+              @case ('car') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                  <circle cx="7" cy="17" r="2"/>
+                  <path d="M9 17h6"/>
+                  <circle cx="17" cy="17" r="2"/>
+                </svg>
+              }
+              @case ('bike') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18.5" cy="17.5" r="3.5"/>
+                  <circle cx="5.5" cy="17.5" r="3.5"/>
+                  <circle cx="15" cy="5" r="1"/>
+                  <path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+                </svg>
+              }
+              @case ('shield') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              }
+            }
+          </div>
+
+          <div class="cg-service-info">
+            <h3 class="cg-service-name">{{ serv.title }}</h3>
+            <p class="cg-service-desc">{{ serv.description }}</p>
+          </div>
+
+          <div class="cg-service-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

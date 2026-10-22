@@ -1,0 +1,26 @@
+@if (mode() === 'spinner') {
+  <div class="cg-loading-spinner-wrap cg-loading-spinner-wrap--{{ size() }}" role="status" aria-live="polite">
+    <div class="cg-spinner">
+      <div class="cg-spinner__ring"></div>
+      <div class="cg-spinner__ring cg-spinner__ring--accent"></div>
+    </div>
+    @if (message()) {
+      <p class="cg-loading-msg">{{ message() }}</p>
+    }
+    <span class="cg-sr-only">{{ message() }}</span>
+  </div>
+} @else {
+  <!-- Skeleton Shimmer Cards Grid -->
+  <div class="cg-skeleton-grid" role="status" aria-label="Loading content">
+    @for (item of skeletonArray; track item) {
+      <div class="cg-skeleton-card">
+        <div class="cg-skeleton-shimmer cg-skeleton-card__media"></div>
+        <div class="cg-skeleton-card__body">
+          <div class="cg-skeleton-shimmer cg-skeleton-card__line cg-skeleton-card__line--short"></div>
+          <div class="cg-skeleton-shimmer cg-skeleton-card__line cg-skeleton-card__line--title"></div>
+          <div class="cg-skeleton-shimmer cg-skeleton-card__line cg-skeleton-card__line--price"></div>
+        </div>
+      </div>
+    }
+  </div>
+}

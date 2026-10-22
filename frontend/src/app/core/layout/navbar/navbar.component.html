@@ -1,0 +1,236 @@
+<header class="cg-navbar-header">
+  <div class="cg-container cg-navbar-container">
+    <!-- Brand Logo -->
+    <a routerLink="/" class="cg-navbar-brand" (click)="closeMobileMenu()">
+      <img
+        src="assets/branding/ceylongo-logo.png"
+        alt="CeylonGo — Discover Local. Feel at Home."
+        class="cg-navbar-logo"
+        width="160"
+        height="64"
+      />
+    </a>
+
+    <!-- Desktop Navigation Links (Center) -->
+    <nav class="cg-navbar-nav" aria-label="Main Navigation">
+      <ul class="cg-nav-list">
+        <li>
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="cg-nav-link"
+          >
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/destinations" routerLinkActive="active" class="cg-nav-link">
+            <span>Destinations</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/homestays" routerLinkActive="active" class="cg-nav-link">
+            <span>Homestays</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/experiences" routerLinkActive="active" class="cg-nav-link">
+            <span>Experiences</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/ai-planner" routerLinkActive="active" class="cg-nav-link">
+            <span>AI Planner</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Right Utilities (Location & User Profile) -->
+    <div class="cg-navbar-actions">
+      <!-- Location Selector (Ref Design: 📍 Sri Lanka ⌵) -->
+      <div class="cg-nav-dropdown-wrap">
+        <button
+          type="button"
+          class="cg-location-btn"
+          (click)="toggleLocationDropdown()"
+          [attr.aria-expanded]="isLocationDropdownOpen()"
+          aria-label="Select Destination Location"
+        >
+          <svg class="cg-location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span class="cg-location-label">{{ selectedLocation() }}</span>
+          <svg class="cg-chevron-icon" [class.rotated]="isLocationDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        @if (isLocationDropdownOpen()) {
+          <div class="cg-dropdown-menu" role="menu">
+            @for (loc of locations; track loc) {
+              <button
+                type="button"
+                class="cg-dropdown-item"
+                [class.selected]="selectedLocation() === loc.replace(' (All)', '')"
+                (click)="selectLocation(loc)"
+                role="menuitem"
+              >
+                <span>{{ loc }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- User Profile (Ref Design: Avatar + Hapinayan ⌵) -->
+      @if (isLoggedIn()) {
+        <div class="cg-nav-dropdown-wrap">
+          <button
+            type="button"
+            class="cg-user-btn"
+            (click)="toggleProfileDropdown()"
+            [attr.aria-expanded]="isProfileDropdownOpen()"
+            aria-label="User Account Menu"
+          >
+            <div class="cg-user-avatar">
+              <span class="cg-user-initial">H</span>
+            </div>
+            <span class="cg-user-name">{{ userName() }}</span>
+            <svg class="cg-chevron-icon" [class.rotated]="isProfileDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          @if (isProfileDropdownOpen()) {
+            <div class="cg-dropdown-menu cg-dropdown-menu--right" role="menu">
+              <div class="cg-dropdown-header">
+                <span class="cg-dropdown-user-title">{{ userName() }}</span>
+                <span class="cg-dropdown-user-role">CeylonGo Traveler</span>
+              </div>
+              <a routerLink="/profile" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>My Profile</span>
+              </a>
+              <a routerLink="/bookings" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>Bookings & Trips</span>
+              </a>
+              <a routerLink="/saved" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                <span>Saved Wishlist</span>
+              </a>
+              <a routerLink="/design-system" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/></svg>
+                <span>Design System Guide</span>
+              </a>
+              <hr class="cg-dropdown-divider" />
+              <button type="button" class="cg-dropdown-item cg-dropdown-item--logout" (click)="logout()" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- Auth Actions if Logged Out -->
+        <a routerLink="/auth/login" class="cg-btn-sign-in">Sign In</a>
+        <a routerLink="/auth/register" class="cg-btn-sign-up">Sign Up</a>
+      }
+
+      <!-- Mobile Hamburger Toggle -->
+      <button
+        type="button"
+        class="cg-hamburger-btn"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="cg-hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+        <span class="cg-hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+        <span class="cg-hamburger-line" [class.open]="isMobileMenuOpen()"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="cg-mobile-backdrop" (click)="closeMobileMenu()"></div>
+    <div class="cg-mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+      <div class="cg-mobile-drawer-header">
+        <img
+          src="assets/branding/ceylongo-logo.png"
+          alt="CeylonGo"
+          class="cg-mobile-logo"
+          width="140"
+          height="56"
+        />
+        <button
+          type="button"
+          class="cg-drawer-close-btn"
+          (click)="closeMobileMenu()"
+          aria-label="Close menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="cg-mobile-nav">
+        <ul class="cg-mobile-nav-list">
+          <li>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Home
+            </a>
+          </li>
+          <li>
+            <a routerLink="/destinations" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Destinations
+            </a>
+          </li>
+          <li>
+            <a routerLink="/homestays" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Homestays
+            </a>
+          </li>
+          <li>
+            <a routerLink="/experiences" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Experiences
+            </a>
+          </li>
+          <li>
+            <a routerLink="/ai-planner" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              AI Travel Planner
+            </a>
+          </li>
+          <li>
+            <a routerLink="/design-system" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Design System Showcase
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="cg-mobile-actions">
+        @if (isLoggedIn()) {
+          <div class="cg-mobile-user-profile">
+            <div class="cg-user-avatar">
+              <span class="cg-user-initial">H</span>
+            </div>
+            <div>
+              <p class="cg-mobile-user-name">{{ userName() }}</p>
+              <button type="button" class="cg-mobile-sign-out" (click)="logout(); closeMobileMenu()">Sign Out</button>
+            </div>
+          </div>
+        } @else {
+          <a routerLink="/auth/login" class="cg-mobile-btn-signin" (click)="closeMobileMenu()">Sign In</a>
+          <a routerLink="/auth/register" class="cg-mobile-btn-signup" (click)="closeMobileMenu()">Sign Up</a>
+        }
+      </div>
+    </div>
+  }
+</header>
