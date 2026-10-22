@@ -1,0 +1,105 @@
+<aside class="cg-filter-panel" aria-label="Search Filters">
+  <div class="cg-filter-panel__header">
+    <div class="cg-filter-panel__title-wrap">
+      <svg class="cg-filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+      </svg>
+      <h3 class="cg-filter-panel__title">{{ title() }}</h3>
+    </div>
+    <button type="button" class="cg-filter-panel__reset-btn" (click)="resetFilters()">
+      Reset
+    </button>
+  </div>
+
+  <div class="cg-filter-panel__body">
+    <!-- Category Filter -->
+    @if (showCategoryFilter()) {
+      <div class="cg-filter-section">
+        <span class="cg-filter-section__label">Category</span>
+        <div class="cg-filter-chips">
+          @for (cat of categories; track cat.id) {
+            <button
+              type="button"
+              class="cg-chip"
+              [class.cg-chip--active]="selectedCategory() === cat.id"
+              (click)="selectedCategory.set(cat.id); applyFilters()"
+            >
+              {{ cat.label }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- District / Region Filter -->
+    @if (showDistrictFilter()) {
+      <div class="cg-filter-section">
+        <label for="cg-district-select" class="cg-filter-section__label">District / Region</label>
+        <select
+          id="cg-district-select"
+          class="cg-filter-select"
+          [ngModel]="selectedDistrict()"
+          (ngModelChange)="selectedDistrict.set($event); applyFilters()"
+        >
+          @for (dist of districts; track dist.code) {
+            <option [value]="dist.code">{{ dist.name }}</option>
+          }
+        </select>
+      </div>
+    }
+
+    <!-- Price Range Filter (LKR) -->
+    @if (showPriceFilter()) {
+      <div class="cg-filter-section">
+        <span class="cg-filter-section__label">Price Range (LKR)</span>
+        <div class="cg-price-inputs">
+          <input
+            type="number"
+            class="cg-price-input"
+            placeholder="Min LKR"
+            [ngModel]="minPrice()"
+            (ngModelChange)="minPrice.set($event ? +$event : undefined)"
+          />
+          <span class="cg-price-sep" aria-hidden="true">—</span>
+          <input
+            type="number"
+            class="cg-price-input"
+            placeholder="Max LKR"
+            [ngModel]="maxPrice()"
+            (ngModelChange)="maxPrice.set($event ? +$event : undefined)"
+          />
+        </div>
+      </div>
+    }
+
+    <!-- Rating Filter -->
+    @if (showRatingFilter()) {
+      <div class="cg-filter-section">
+        <span class="cg-filter-section__label">Guest Rating</span>
+        <div class="cg-rating-options">
+          @for (r of ratings; track r.value) {
+            <button
+              type="button"
+              class="cg-rating-btn"
+              [class.cg-rating-btn--active]="(minRating() || 0) === r.value"
+              (click)="minRating.set(r.value === 0 ? undefined : r.value); applyFilters()"
+            >
+              {{ r.label }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="cg-filter-panel__footer">
+    <app-button
+      variant="primary"
+      size="md"
+      [fullWidth]="true"
+      (btnClick)="applyFilters()"
+    >
+      Apply Filters
+    </app-button>
+  </div>
+</aside>

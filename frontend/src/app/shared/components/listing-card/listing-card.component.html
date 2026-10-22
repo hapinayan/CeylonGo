@@ -1,0 +1,92 @@
+<article
+  class="cg-listing-card"
+  (click)="handleCardClick($event)"
+  tabindex="0"
+  (keydown.enter)="cardClick.emit(item())"
+>
+  <!-- Media Container -->
+  <div class="cg-listing-card__media">
+    <img
+      [src]="item().imageUrl"
+      [alt]="item().title"
+      class="cg-listing-card__img"
+      loading="lazy"
+    />
+
+    <!-- Optional Badge -->
+    @if (item().badge) {
+      <span
+        class="cg-listing-card__badge"
+        [class.cg-listing-card__badge--accent]="item().badgeVariant === 'accent'"
+        [class.cg-listing-card__badge--success]="item().badgeVariant === 'success'"
+      >
+        {{ item().badge }}
+      </span>
+    }
+
+    <!-- Favorite Heart Button -->
+    @if (showFavorite()) {
+      <button
+        type="button"
+        class="cg-listing-card__fav-btn"
+        [class.cg-listing-card__fav-btn--active]="isFav()"
+        (click)="toggleFavorite($event)"
+        [attr.aria-label]="isFav() ? 'Remove from wishlist' : 'Save to wishlist'"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+        </svg>
+      </button>
+    }
+  </div>
+
+  <!-- Content Body -->
+  <div class="cg-listing-card__body">
+    <!-- Location & Rating Row -->
+    <div class="cg-listing-card__meta-row">
+      <span class="cg-listing-card__location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <span>{{ item().location }}</span>
+      </span>
+
+      @if (item().rating) {
+        <span class="cg-listing-card__rating">
+          <svg viewBox="0 0 24 24" fill="#ff9f1c" stroke="#ff9f1c" stroke-width="1" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <span class="cg-listing-card__rating-num">{{ item().rating }}</span>
+          @if (item().reviewCount) {
+            <span class="cg-listing-card__reviews">({{ item().reviewCount }})</span>
+          }
+        </span>
+      }
+    </div>
+
+    <!-- Title -->
+    <h3 class="cg-listing-card__title">
+      {{ item().title }}
+    </h3>
+
+    <!-- Price & Action Footer -->
+    <div class="cg-listing-card__footer">
+      <div class="cg-listing-card__price-wrap">
+        <span class="cg-listing-card__price-prefix">From</span>
+        <span class="cg-listing-card__price-amount">LKR {{ formatPrice(item().price) }}</span>
+        <span class="cg-listing-card__price-unit">/ {{ item().priceUnit || 'night' }}</span>
+      </div>
+
+      <div class="cg-listing-card__cta">
+        <app-button
+          variant="secondary"
+          size="sm"
+          (btnClick)="cardClick.emit(item())"
+        >
+          {{ ctaLabel() }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+</article>

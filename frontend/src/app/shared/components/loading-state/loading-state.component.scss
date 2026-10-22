@@ -1,0 +1,139 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.cg-loading-spinner-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cg-space-8);
+  gap: var(--cg-space-4);
+  text-align: center;
+
+  &--sm {
+    padding: var(--cg-space-4);
+    .cg-spinner {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &--md {
+    .cg-spinner {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  &--lg {
+    padding: var(--cg-space-12);
+    .cg-spinner {
+      width: 56px;
+      height: 56px;
+    }
+  }
+}
+
+.cg-spinner {
+  position: relative;
+
+  &__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid var(--cg-primary-subtle);
+    border-top-color: var(--cg-primary);
+    animation: spinRing 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+    &--accent {
+      border: 3px solid transparent;
+      border-bottom-color: var(--cg-accent);
+      animation: spinRing 1.4s cubic-bezier(0.5, 0, 0.5, 1) reverse infinite;
+    }
+  }
+}
+
+.cg-loading-msg {
+  font-size: var(--cg-font-size-sm);
+  font-weight: var(--cg-font-weight-medium);
+  color: var(--cg-text-secondary);
+  margin: 0;
+}
+
+// --- Skeleton Shimmer Grid ---
+.cg-skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--cg-space-6);
+
+  @include mixins.respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mixins.respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cg-skeleton-card {
+  background-color: #ffffff;
+  border: 1px solid var(--cg-border);
+  border-radius: var(--cg-radius-card);
+  overflow: hidden;
+
+  &__media {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+  }
+
+  &__body {
+    padding: var(--cg-space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--cg-space-3);
+  }
+
+  &__line {
+    height: 14px;
+    border-radius: 4px;
+
+    &--short {
+      width: 40%;
+    }
+
+    &--title {
+      width: 85%;
+      height: 18px;
+    }
+
+    &--price {
+      width: 60%;
+      height: 16px;
+    }
+  }
+}
+
+.cg-skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 0%,
+    #e2e8f0 50%,
+    #f1f5f9 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

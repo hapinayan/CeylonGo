@@ -1,0 +1,128 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+:host([fullWidth='true']),
+.cg-search-box--full {
+  display: flex;
+  width: 100%;
+}
+
+.cg-search-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1.5px solid var(--cg-border);
+  border-radius: var(--cg-radius-pill); // pill rounded
+  box-shadow: var(--cg-shadow-sm);
+  transition: all var(--cg-transition-fast);
+
+  &:focus-within {
+    border-color: var(--cg-accent);
+    box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2);
+  }
+
+  // Sizes
+  &--sm {
+    height: 38px;
+    padding: 0 var(--cg-space-2) 0 var(--cg-space-3);
+
+    .cg-search-box__input {
+      font-size: var(--cg-font-size-xs);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--md {
+    height: 46px;
+    padding: 0 var(--cg-space-3) 0 var(--cg-space-4);
+
+    .cg-search-box__input {
+      font-size: var(--cg-font-size-sm);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &--lg {
+    height: 54px;
+    padding: 0 var(--cg-space-4) 0 var(--cg-space-5);
+
+    .cg-search-box__input {
+      font-size: var(--cg-font-size-base);
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cg-text-muted);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin-right: var(--cg-space-2);
+    transition: color var(--cg-transition-fast);
+
+    &:hover {
+      color: var(--cg-primary);
+    }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    color: var(--cg-text-primary);
+    font-family: var(--cg-font-family);
+    outline: none;
+
+    &::placeholder {
+      color: var(--cg-text-muted);
+    }
+  }
+
+  &__clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--cg-surface-subtle);
+    color: var(--cg-text-secondary);
+    cursor: pointer;
+    padding: 0;
+    margin-left: var(--cg-space-2);
+    transition: all var(--cg-transition-fast);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      background-color: var(--cg-border);
+      color: var(--cg-primary);
+    }
+  }
+}

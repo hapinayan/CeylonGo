@@ -1,0 +1,69 @@
+@if (isOpen()) {
+  <div class="cg-dialog-backdrop" (click)="handleCancel()">
+    <div
+      class="cg-dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="'cg-dialog-title'"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="cg-dialog__header">
+        <div
+          class="cg-dialog__icon-wrap"
+          [class.cg-dialog__icon-wrap--danger]="variant() === 'danger'"
+          [class.cg-dialog__icon-wrap--warning]="variant() === 'warning'"
+          aria-hidden="true"
+        >
+          @if (variant() === 'danger') {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+          } @else if (variant() === 'warning') {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+          }
+        </div>
+
+        <div class="cg-dialog__title-area">
+          <h3 id="cg-dialog-title" class="cg-dialog__title">{{ title() }}</h3>
+          <p class="cg-dialog__message">{{ message() }}</p>
+        </div>
+      </div>
+
+      <div class="cg-dialog__body">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="cg-dialog__footer">
+        <app-button
+          variant="secondary"
+          size="md"
+          [disabled]="loading()"
+          (btnClick)="handleCancel()"
+        >
+          {{ cancelText() }}
+        </app-button>
+
+        <app-button
+          [variant]="variant() === 'danger' ? 'danger' : 'primary'"
+          size="md"
+          [loading]="loading()"
+          (btnClick)="handleConfirm()"
+        >
+          {{ confirmText() }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+}

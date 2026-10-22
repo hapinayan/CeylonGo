@@ -1,0 +1,20 @@
+<div class="cg-section-header cg-section-header--{{ align() }}">
+  @if (kicker()) {
+    <span class="cg-section-header__kicker">{{ kicker() }}</span>
+  }
+
+  <h2 class="cg-section-header__title">
+    {{ title() }}
+    @if (highlightText()) {
+      <span class="cg-section-header__highlight">{{ highlightText() }}</span>
+    }
+  </h2>
+
+  @if (subtitle()) {
+    <p class="cg-section-header__subtitle">{{ subtitle() }}</p>
+  }
+
+  <div class="cg-section-header__actions">
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>
