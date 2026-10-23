@@ -5,7 +5,9 @@ import { PopularDestinationsComponent } from '../../components/popular-destinati
 import { FeaturedHomestaysComponent } from '../../components/featured-homestays/featured-homestays.component';
 import { LocalExperiencesComponent } from '../../components/local-experiences/local-experiences.component';
 import { AiPlannerBannerComponent } from '../../components/ai-planner-banner/ai-planner-banner.component';
-import { TourismServicesComponent } from '../../components/tourism-services/tourism-services.component';
+import { WhyChooseComponent } from '../../components/why-choose/why-choose.component';
+import { CommunityTestimonialsComponent } from '../../components/community-testimonials/community-testimonials.component';
+import { NewsletterSectionComponent } from '../../components/newsletter-section/newsletter-section.component';
 
 @Component({
   selector: 'app-home-page',
@@ -17,7 +19,9 @@ import { TourismServicesComponent } from '../../components/tourism-services/tour
     FeaturedHomestaysComponent,
     LocalExperiencesComponent,
     AiPlannerBannerComponent,
-    TourismServicesComponent,
+    WhyChooseComponent,
+    CommunityTestimonialsComponent,
+    NewsletterSectionComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',

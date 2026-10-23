@@ -7,17 +7,39 @@
   background-color: #ffffff;
   border-bottom: 1px solid var(--cg-border);
   box-shadow: 0 1px 4px 0 rgba(15, 23, 42, 0.04);
-  transition: box-shadow var(--cg-transition-fast);
+  height: 80px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .cg-navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 74px;
+  height: 100%;
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  gap: 1rem;
+
+  @media (min-width: 1440px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 0.5rem;
+  }
 }
 
-// Brand Logo
+// Brand Logo (Left Section)
 .cg-navbar-brand {
   display: flex;
   align-items: center;
@@ -26,50 +48,82 @@
 
   .cg-navbar-logo {
     height: 48px;
+    max-height: 48px;
     width: auto;
     object-fit: contain;
+    display: block;
+
+    @media (max-width: 768px) {
+      height: 38px;
+      max-height: 38px;
+    }
+
+    @media (max-width: 390px) {
+      height: 34px;
+      max-height: 34px;
+    }
   }
 }
 
-// Desktop Navigation (Centered)
+// Desktop Navigation (Center Section)
 .cg-navbar-nav {
   display: none;
+  height: 100%;
 
-  @include mixins.respond-to('lg') {
-    display: block;
+  @media (min-width: 1200px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
   }
 }
 
 .cg-nav-list {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  gap: clamp(0.75rem, 1.2vw, 1.35rem);
   list-style: none;
   margin: 0;
   padding: 0;
+  height: 100%;
+
+  li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 }
 
 .cg-nav-link {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 0.25rem;
+  height: 80px;
+  padding: 0 0.5rem;
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--cg-text-secondary);
   text-decoration: none;
+  white-space: nowrap; // Prevents "AI Planner", "Tour Guides" from breaking!
   transition: color var(--cg-transition-fast);
+
+  span {
+    white-space: nowrap;
+  }
 
   &::after {
     content: '';
     position: absolute;
-    bottom: -18px;
-    left: 0;
-    width: 0;
+    bottom: 0;
+    left: 0.5rem;
+    right: 0.5rem;
     height: 3px;
-    background-color: var(--cg-accent); // Orange active bar as in reference image!
-    border-radius: 2px;
-    transition: width var(--cg-transition-fast);
+    background-color: var(--cg-accent);
+    border-radius: 2px 2px 0 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--cg-transition-fast);
   }
 
   &:hover {
@@ -81,23 +135,54 @@
     font-weight: 600;
 
     &::after {
-      width: 100%;
+      transform: scaleX(1);
     }
   }
 }
 
-// Right Utilities / Actions
+// Right Utilities / Actions (Right Section)
 .cg-navbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+
+  @media (max-width: 480px) {
+    gap: 0.45rem;
+  }
+}
+
+.cg-nav-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--cg-radius-pill);
+  color: var(--cg-text-secondary);
+  background: none;
+  border: none;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: all var(--cg-transition-fast);
+
+  svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  &:hover {
+    color: var(--cg-primary);
+    background-color: var(--cg-bg-light);
+  }
 }
 
 .cg-nav-dropdown-wrap {
   position: relative;
 }
 
-// Location Selector Pill (Ref: 📍 Sri Lanka ⌵)
+// Location Selector Pill
 .cg-location-btn {
   display: inline-flex;
   align-items: center;
@@ -110,18 +195,26 @@
   font-weight: 500;
   color: var(--cg-text-primary);
   cursor: pointer;
+  white-space: nowrap; // Prevents "Sri Lanka" from breaking!
+  flex-shrink: 0;
   transition: all var(--cg-transition-fast);
 
   .cg-location-icon {
     width: 15px;
     height: 15px;
     color: var(--cg-primary);
+    flex-shrink: 0;
+  }
+
+  .cg-location-label {
+    white-space: nowrap;
   }
 
   .cg-chevron-icon {
     width: 13px;
     height: 13px;
     color: var(--cg-text-muted);
+    flex-shrink: 0;
     transition: transform var(--cg-transition-fast);
 
     &.rotated {
@@ -133,9 +226,15 @@
     border-color: #cbd5e1;
     background-color: #f1f5f9;
   }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    gap: 0.35rem;
+  }
 }
 
-// User Profile Badge (Ref: Avatar + Hapinayan ⌵)
+// User Profile Badge
 .cg-user-btn {
   display: inline-flex;
   align-items: center;
@@ -145,6 +244,8 @@
   border: 1px solid transparent;
   border-radius: var(--cg-radius-pill);
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all var(--cg-transition-fast);
 
   .cg-user-avatar {
@@ -158,19 +259,28 @@
     justify-content: center;
     font-size: 0.8125rem;
     font-weight: 700;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    .cg-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .cg-user-name {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--cg-text-primary);
+    white-space: nowrap;
   }
 
   .cg-chevron-icon {
     width: 13px;
     height: 13px;
     color: var(--cg-text-muted);
+    flex-shrink: 0;
     transition: transform var(--cg-transition-fast);
 
     &.rotated {
@@ -188,8 +298,8 @@
 .cg-dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
-  left: 0;
-  min-width: 220px;
+  right: 0;
+  min-width: 210px;
   background-color: #ffffff;
   border: 1px solid var(--cg-border);
   border-radius: var(--cg-radius-md);
@@ -200,6 +310,11 @@
   flex-direction: column;
   gap: 0.2rem;
   animation: fadeIn 0.15s ease-out;
+
+  &--left {
+    right: auto;
+    left: 0;
+  }
 
   &--right {
     left: auto;
@@ -271,6 +386,7 @@
 
   &--logout {
     color: var(--cg-error);
+
     svg {
       color: var(--cg-error);
     }
@@ -278,57 +394,75 @@
     &:hover {
       background-color: #fef2f2;
       color: var(--cg-error);
-      svg {
-        color: var(--cg-error);
-      }
     }
   }
 }
 
-// Auth Buttons
-.cg-btn-sign-in {
+// Auth Buttons Container & Styles
+.cg-auth-buttons {
   display: none;
-  padding: 0.5rem 1.125rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--cg-primary);
-  background-color: #ffffff;
-  border: 1.5px solid var(--cg-border);
-  border-radius: var(--cg-radius-pill);
-  text-decoration: none;
-  transition: all var(--cg-transition-fast);
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
 
   @include mixins.respond-to('sm') {
-    display: inline-block;
-  }
-
-  &:hover {
-    border-color: var(--cg-primary);
-    background-color: var(--cg-primary-subtle);
+    display: inline-flex;
   }
 }
 
-.cg-btn-sign-up {
-  display: none;
-  padding: 0.55rem 1.25rem;
+// 1. Outlined Navy Log In Button
+.cg-btn-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.15rem;
+  min-width: 80px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cg-primary);
+  background-color: transparent;
+  border: 1.5px solid var(--cg-primary);
+  border-radius: var(--cg-radius-pill);
+  text-decoration: none;
+  white-space: nowrap; // Prevents "Log In" from wrapping!
+  flex-shrink: 0;
+  transition: all var(--cg-transition-fast);
+
+  &:hover {
+    background-color: var(--cg-primary-subtle);
+    border-color: var(--cg-primary-hover);
+    color: var(--cg-primary-hover);
+  }
+}
+
+// 2. Orange Sign Up Button
+.cg-btn-signup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.25rem;
+  min-width: 88px;
   font-size: 0.875rem;
   font-weight: 700;
   color: #ffffff;
   background-color: var(--cg-accent);
-  border: none;
+  border: 1.5px solid var(--cg-accent);
   border-radius: var(--cg-radius-pill);
   box-shadow: 0 2px 6px 0 rgba(255, 159, 28, 0.35);
   text-decoration: none;
+  white-space: nowrap; // Prevents "Sign Up" from wrapping!
+  flex-shrink: 0;
   transition: all var(--cg-transition-fast);
-
-  @include mixins.respond-to('sm') {
-    display: inline-block;
-  }
 
   &:hover {
     background-color: var(--cg-accent-hover);
+    border-color: var(--cg-accent-hover);
     box-shadow: 0 4px 10px 0 rgba(255, 159, 28, 0.45);
     transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 }
 
@@ -346,8 +480,9 @@
   border-radius: var(--cg-radius-sm);
   cursor: pointer;
   gap: 5px;
+  flex-shrink: 0;
 
-  @include mixins.respond-to('lg') {
+  @media (min-width: 1200px) {
     display: none;
   }
 
@@ -457,60 +592,142 @@
 .cg-mobile-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
   margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--cg-border);
+}
 
-  .cg-mobile-btn-signin,
+// Guest Mobile Auth Buttons
+.cg-mobile-auth-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+
+  .cg-mobile-btn-login,
   .cg-mobile-btn-signup {
     display: block;
     text-align: center;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     font-size: 0.9375rem;
-    font-weight: 600;
     border-radius: var(--cg-radius-pill);
     text-decoration: none;
+    transition: all var(--cg-transition-fast);
   }
 
-  .cg-mobile-btn-signin {
-    border: 1.5px solid var(--cg-border);
+  .cg-mobile-btn-login {
+    border: 1.5px solid var(--cg-primary);
     color: var(--cg-primary);
+    background-color: transparent;
+    font-weight: 600;
+
+    &:hover {
+      background-color: var(--cg-primary-subtle);
+    }
   }
 
   .cg-mobile-btn-signup {
     background-color: var(--cg-accent);
     color: #ffffff;
+    border: 1.5px solid var(--cg-accent);
+    font-weight: 700;
+    box-shadow: 0 2px 6px 0 rgba(255, 159, 28, 0.35);
+
+    &:hover {
+      background-color: var(--cg-accent-hover);
+    }
   }
 }
 
+// Authenticated Mobile User Card & Links
 .cg-mobile-user-profile {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: var(--cg-bg-light);
+  border-radius: var(--cg-radius-md);
+
+  .cg-mobile-user-info {
+    display: flex;
+    flex-direction: column;
+  }
 
   .cg-mobile-user-name {
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 700;
     color: var(--cg-primary);
     margin: 0;
   }
 
-  .cg-mobile-sign-out {
+  .cg-mobile-user-role {
     font-size: 0.75rem;
+    color: var(--cg-text-muted);
+    margin: 0.1rem 0 0;
+  }
+}
+
+.cg-mobile-user-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  .cg-mobile-sublink {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cg-text-primary);
+    border-radius: var(--cg-radius-sm);
+    text-decoration: none;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: var(--cg-text-muted);
+    }
+
+    &:hover {
+      background-color: var(--cg-surface-muted);
+      color: var(--cg-primary);
+
+      svg {
+        color: var(--cg-primary);
+      }
+    }
+  }
+
+  .cg-mobile-sign-out-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: var(--cg-error);
     background: none;
     border: none;
-    padding: 0;
+    border-radius: var(--cg-radius-sm);
     cursor: pointer;
+    text-align: left;
+    width: 100%;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: var(--cg-error);
+    }
+
+    &:hover {
+      background-color: #fef2f2;
+    }
   }
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
 }

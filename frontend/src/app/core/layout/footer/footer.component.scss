@@ -1,92 +1,73 @@
 @use 'styles/mixins' as mixins;
 
 .cg-footer {
-  position: relative;
-  background-color: #082b5c;
-  color: #ffffff;
-  margin-top: 3rem;
-  overflow: hidden;
-}
-
-.cg-footer-wave {
-  position: relative;
-  width: 100%;
-  line-height: 0;
-  transform: translateY(1px);
-
-  svg {
-    display: block;
-    width: 100%;
-    height: 48px;
-
-    @include mixins.respond-to('md') {
-      height: 70px;
-    }
-  }
+  background-color: #ffffff;
+  border-top: 1px solid var(--cg-border);
+  padding: 3.5rem 0 2rem;
+  color: var(--cg-text-primary);
 }
 
 .cg-footer-main {
-  background: linear-gradient(180deg, #082b5c 0%, #041733 100%);
-  padding-top: 2rem;
-  padding-bottom: 1.5rem;
-}
-
-.cg-footer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-
-  @include mixins.respond-to('sm') {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 
   @include mixins.respond-to('lg') {
-    grid-template-columns: 2.2fr 1fr 1fr 1fr 1.6fr;
-    gap: 2rem;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3.5rem;
   }
 }
 
-// Brand Column
+// Left Brand Column
 .cg-footer-brand {
-  .cg-footer-logo-wrap {
+  max-width: 260px;
+  flex-shrink: 0;
+
+  .cg-footer-logo-link {
     display: inline-block;
-    background-color: #ffffff;
-    padding: 0.5rem 0.875rem;
-    border-radius: var(--cg-radius-md);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 1rem;
+    text-decoration: none;
   }
 
   .cg-footer-logo {
-    height: 44px;
+    height: 48px;
     width: auto;
     object-fit: contain;
     display: block;
   }
 
   .cg-footer-tagline {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: #ff9f1c;
-    margin-bottom: 0.5rem;
-  }
-
-  .cg-footer-desc {
     font-size: 0.875rem;
-    line-height: 1.6;
-    color: #cbd5e1;
-    max-width: 320px;
+    color: var(--cg-text-muted);
+    margin: 0.65rem 0 0;
+    line-height: 1.4;
   }
 }
 
-// Columns
+// Right 4-Column Grid
+.cg-footer-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  flex: 1;
+
+  @include mixins.respond-to('md') {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
 .cg-footer-col {
+  display: flex;
+  flex-direction: column;
+
   .cg-footer-col-title {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 1.125rem;
-    letter-spacing: 0.02em;
+    color: var(--cg-text-primary);
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
   }
 }
 
@@ -96,126 +77,147 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.65rem;
 
-  li a {
+  a {
     font-size: 0.875rem;
-    color: #cbd5e1;
+    color: var(--cg-text-secondary);
     text-decoration: none;
-    transition: color var(--cg-transition-fast), transform var(--cg-transition-fast);
-    display: inline-block;
+    transition: color var(--cg-transition-fast);
 
     &:hover {
-      color: #ff9f1c;
-      transform: translateX(3px);
+      color: var(--cg-primary);
     }
   }
 }
 
-// Social Media Column
-.cg-footer-col--social {
-  .cg-social-icons {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin-bottom: 1rem;
+// Social Icons (Matching Reference)
+.cg-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.cg-social-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--cg-bg-light);
+  border: 1px solid var(--cg-border);
+  color: var(--cg-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--cg-transition-fast);
+
+  svg {
+    width: 15px;
+    height: 15px;
   }
 
-  .cg-social-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
+  &:hover {
+    background-color: var(--cg-primary);
     color: #ffffff;
-    text-decoration: none;
-    transition: transform var(--cg-transition-fast), filter var(--cg-transition-fast);
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.15);
-    }
-
-    &--fb { background-color: #1877f2; }
-    &--ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
-    &--yt { background-color: #ff0000; }
-    &--tt { background-color: #010101; border: 1px solid rgba(255, 255, 255, 0.2); }
-  }
-
-  .cg-social-tagline {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: #cbd5e1;
-    margin-bottom: 0.75rem;
-  }
-
-  .cg-sri-lanka-flourish {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    .cg-flourish-text {
-      font-family: var(--cg-font-family);
-      font-size: 1.125rem;
-      font-style: italic;
-      font-weight: 600;
-      color: #ffffff;
-      letter-spacing: 0.03em;
-    }
-
-    .cg-flourish-curve {
-      width: 140px;
-      height: 12px;
-      margin-top: -2px;
-    }
+    border-color: var(--cg-primary);
+    transform: translateY(-2px);
   }
 }
 
-// Bottom Bar
-.cg-footer-bottom {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+// App Badges (Black Rounded Cards)
+.cg-app-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-  .cg-footer-bottom-inner {
+.cg-app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  width: fit-content;
+  user-select: none;
+  cursor: pointer;
+  transition: transform var(--cg-transition-fast), opacity var(--cg-transition-fast);
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .cg-badge-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .cg-badge-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.8125rem;
-    color: #94a3b8;
-    text-align: center;
+    text-align: left;
+  }
 
-    @include mixins.respond-to('md') {
-      flex-direction: row;
-      justify-content: space-between;
-      text-align: left;
+  .cg-badge-sub {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: #d1d5db;
+  }
+
+  .cg-badge-main {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+}
+
+// Bottom Legal Bar
+.cg-footer-bottom {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cg-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  align-items: center;
+
+  @include mixins.respond-to('md') {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.cg-footer-copyright {
+  font-size: 0.8125rem;
+  color: var(--cg-text-muted);
+  margin: 0;
+}
+
+.cg-footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.8125rem;
+
+  a {
+    color: var(--cg-text-muted);
+    text-decoration: none;
+    transition: color var(--cg-transition-fast);
+
+    &:hover {
+      color: var(--cg-primary);
     }
   }
 
-  .cg-footer-bottom-links {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    a {
-      color: #94a3b8;
-      text-decoration: none;
-      transition: color var(--cg-transition-fast);
-
-      &:hover {
-        color: #ff9f1c;
-      }
-    }
-
-    span {
-      color: #64748b;
-    }
+  .cg-legal-sep {
+    color: #cbd5e1;
+    user-select: none;
   }
 }

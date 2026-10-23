@@ -5,7 +5,8 @@
 export interface DestinationItem {
   id: string;
   name: string;
-  province: string;
+  province?: string;
+  category?: string;
   imageUrl: string;
   description?: string;
 }
@@ -26,7 +27,9 @@ export interface ExperienceItem {
   id: string;
   title: string;
   location: string;
-  priceLkr: number;
+  priceLkr?: number;
+  rating?: number;
+  reviewCount?: number;
   imageUrl: string;
   duration?: string;
 }
@@ -37,6 +40,34 @@ export interface CategoryItem {
   icon: string;
   bgColor: string;
   iconColor: string;
+}
+
+export interface QuickBenefitItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  iconBg: string;
+  iconColor: string;
+}
+
+export interface MetricItem {
+  id: string;
+  value: string;
+  label: string;
+  subtext?: string;
+  icon: string;
+  iconBg?: string;
+  iconColor?: string;
+}
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  country: string;
+  avatarUrl: string;
+  rating: number;
+  quote: string;
 }
 
 export interface TourismServiceItem {
@@ -54,3 +85,4 @@ export interface SearchCriteria {
   checkOut: string;
   guests: number;
 }
+

@@ -1,5 +1,6 @@
-import { Component, signal, HostListener, ElementRef } from '@angular/core';
+import { Component, signal, computed, inject, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +10,27 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  private readonly elementRef = inject(ElementRef);
+  private readonly authService = inject(AuthService);
+
+  // Authentication State from AuthService (defaults to guest unauthenticated)
+  protected readonly isLoggedIn = this.authService.isAuthenticated;
+  protected readonly currentUser = this.authService.currentUser;
+
+  // Dynamic user display properties (no hardcoded credentials)
+  protected readonly userName = computed(() => this.currentUser()?.name || 'Traveler');
+  protected readonly userRole = computed(() => this.currentUser()?.role || 'CeylonGo Traveler');
+  protected readonly userAvatar = computed(() => this.currentUser()?.avatarUrl || null);
+  protected readonly userInitial = computed(() => {
+    const name = this.currentUser()?.name?.trim();
+    return name && name.length > 0 ? name.charAt(0).toUpperCase() : 'U';
+  });
+
+  // UI Dropdown States
   protected readonly isMobileMenuOpen = signal(false);
   protected readonly isLocationDropdownOpen = signal(false);
   protected readonly isProfileDropdownOpen = signal(false);
   protected readonly selectedLocation = signal('Sri Lanka');
-  protected readonly userName = signal('Hapinayan');
-  protected readonly userAvatar = signal('assets/branding/ceylongo-logo.png');
-  protected readonly isLoggedIn = signal(true);
 
   protected readonly locations = [
     'Sri Lanka (All)',
@@ -28,8 +43,6 @@ export class NavbarComponent {
     'Nuwara Eliya',
     'Trincomalee & East',
   ];
-
-  constructor(private readonly elementRef: ElementRef) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -63,7 +76,7 @@ export class NavbarComponent {
   }
 
   protected logout(): void {
-    this.isLoggedIn.set(false);
+    this.authService.logout();
     this.isProfileDropdownOpen.set(false);
   }
 }

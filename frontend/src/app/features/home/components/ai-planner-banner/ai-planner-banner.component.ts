@@ -1,42 +1,40 @@
-import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+export interface ItineraryDayPreview {
+  day: string;
+  title: string;
+  imageUrl: string;
+}
 
 @Component({
   selector: 'app-ai-planner-banner',
   standalone: true,
-  imports: [FormsModule],
+  imports: [RouterLink],
   templateUrl: './ai-planner-banner.component.html',
   styleUrl: './ai-planner-banner.component.scss',
 })
 export class AiPlannerBannerComponent {
-  protected readonly selectedDestination = signal('');
-  protected readonly travelDuration = signal('3 Days');
-  protected readonly selectedInterest = signal('');
-  protected readonly isGenerating = signal(false);
-  protected readonly generatedNotice = signal(false);
-
-  protected readonly destinations = [
-    'Cultural Triangle (Sigiriya & Kandy)',
-    'Hill Country (Ella & Nuwara Eliya)',
-    'Southern Coast (Galle & Mirissa)',
-    'Wild & Heritage (Yala & Polonnaruwa)',
-    'Northern Peninsula (Jaffna)',
+  protected readonly previewDays: ItineraryDayPreview[] = [
+    {
+      day: 'Day 1',
+      title: 'Jaffna Heritage Tour',
+      imageUrl: 'assets/images/destinations/dest_jaffna.jpg',
+    },
+    {
+      day: 'Day 2',
+      title: 'Trincomalee Beaches',
+      imageUrl: 'assets/images/destinations/dest_trincomalee.jpg',
+    },
+    {
+      day: 'Day 3',
+      title: 'Local Experiences',
+      imageUrl: 'assets/images/experiences/exp_sea_farming.jpg',
+    },
+    {
+      day: 'Day 4',
+      title: 'Batticaloa Lagoon',
+      imageUrl: 'assets/images/destinations/dest_batticaloa.jpg',
+    },
   ];
-
-  protected readonly interests = [
-    'Nature & Wildlife',
-    'Culture & Heritage',
-    'Beach & Surfing',
-    'Tea & Hill Country',
-    'Ayurveda & Wellness',
-  ];
-
-  protected onGenerate(): void {
-    this.isGenerating.set(true);
-    setTimeout(() => {
-      this.isGenerating.set(false);
-      this.generatedNotice.set(true);
-      setTimeout(() => this.generatedNotice.set(false), 4000);
-    }, 1000);
-  }
 }

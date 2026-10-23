@@ -2,24 +2,30 @@
   <!-- Section Header -->
   <div class="cg-block-header">
     <div class="cg-block-header-left">
-      <h2 class="cg-block-title">Featured Homestays</h2>
-      <p class="cg-block-subtitle">Stay with local families and experience authentic Sri Lankan hospitality</p>
+      <h2 class="cg-block-title">
+        Featured <span class="cg-title-accent">Homestays</span>
+      </h2>
     </div>
     <a routerLink="/homestays" class="cg-block-view-all">
       <span>View All Homestays</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="5" y1="12" x2="19" y2="12" />
         <polyline points="12 5 19 12 12 19" />
       </svg>
     </a>
   </div>
 
-  <!-- Cards Grid (4 cards) -->
+  <!-- Cards Grid (4 cards in row) -->
   <div class="cg-homestays-grid">
     @for (stay of homestays; track stay.id) {
       <div class="cg-homestay-card">
         <div class="cg-stay-img-wrap">
-          <img [src]="stay.imageUrl" [alt]="stay.name + ' in ' + stay.location" class="cg-stay-img" loading="lazy" />
+          <img
+            [src]="stay.imageUrl"
+            [alt]="stay.name + ' in ' + stay.location"
+            class="cg-stay-img"
+            loading="lazy"
+          />
           <button
             type="button"
             class="cg-fav-btn"
@@ -34,32 +40,18 @@
         </div>
 
         <div class="cg-stay-body">
-          <h3 class="cg-stay-title">{{ stay.name }}</h3>
-          <div class="cg-stay-location">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            <span>{{ stay.location }}</span>
-          </div>
+          <h3 class="cg-stay-title" [title]="stay.name">{{ stay.name }}</h3>
+          <p class="cg-stay-location">{{ stay.location }}</p>
 
-          <div class="cg-stay-rating">
-            <span class="cg-star">★</span>
+          <div class="cg-stay-rating-row">
+            <span class="cg-star" aria-hidden="true">★</span>
             <span class="cg-rating-score">{{ stay.rating }}</span>
             <span class="cg-rating-count">({{ stay.reviewCount }})</span>
           </div>
 
-          <div class="cg-stay-footer">
-            <div class="cg-stay-price-wrap">
-              <span class="cg-price-prefix">From</span>
-              <span class="cg-price-val">LKR {{ stay.priceLkr | number }}</span>
-            </div>
-            <a [routerLink]="['/homestays', stay.id]" class="cg-stay-arrow-btn" [attr.aria-label]="'View ' + stay.name">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
+          <div class="cg-stay-price-row">
+            <span class="cg-price-val">LKR {{ stay.priceLkr | number }}</span>
+            <span class="cg-price-unit">/ night</span>
           </div>
         </div>
       </div>
