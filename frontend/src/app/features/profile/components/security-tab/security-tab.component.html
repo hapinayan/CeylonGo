@@ -1,0 +1,287 @@
+<div class="cg-panel-card" role="region" aria-label="Security and Credentials Settings">
+  <!-- Card Header -->
+  <div class="cg-panel-header">
+    <div>
+      <h3 class="cg-panel-title">Security & Account Credentials</h3>
+      <p class="cg-panel-subtitle">
+        Manage your password, two-factor authentication, and active devices.
+      </p>
+    </div>
+    <span class="cg-panel-badge cg-panel-badge--warning">Demo Mode</span>
+  </div>
+
+  <!-- Prominent Security Demo Disclaimer Banner -->
+  <div class="cg-security-banner" role="status" aria-live="polite">
+    <div class="cg-security-banner-icon" aria-hidden="true">🔒</div>
+    <div class="cg-security-banner-text">
+      <strong>Client-Side Security Demonstration Only:</strong>
+      <p>
+        No passwords, credentials, or authentication tokens are ever sent to a server or stored in browser storage.
+        All password changes, 2FA toggles, and session revocations are simulated in memory.
+        Production authentication with salted BCrypt hashing in Microsoft SQL Server (MSSQL) is scheduled for backend API rollout.
+      </p>
+    </div>
+  </div>
+
+  <!-- Dynamic Notification Alerts -->
+  @if (successNotice()) {
+    <div class="cg-alert cg-alert--success" role="status" aria-live="polite">
+      <span class="cg-alert-icon" aria-hidden="true">✓</span>
+      <span class="cg-alert-text">{{ successNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss confirmation notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  @if (errorNotice()) {
+    <div class="cg-alert cg-alert--error" role="alert">
+      <span class="cg-alert-icon" aria-hidden="true">⚠️</span>
+      <span class="cg-alert-text">{{ errorNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss error notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  <!-- Section 1: Demo Password Change Form -->
+  <section class="cg-security-section" aria-labelledby="heading-password">
+    <div class="cg-section-title-wrap">
+      <h4 id="heading-password" class="cg-section-title">Change Account Password</h4>
+      <span class="cg-last-changed-text">
+        Last updated: {{ profile().security.lastPasswordChangeDate }} (Demo)
+      </span>
+    </div>
+
+    <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="cg-password-form" novalidate>
+      <div class="cg-form-stack">
+        <!-- Current Password -->
+        <div class="cg-password-field-wrap">
+          <app-form-input
+            formControlName="currentPassword"
+            label="Current Password"
+            [type]="showCurrentPassword() ? 'text' : 'password'"
+            placeholder="Enter current password"
+            [required]="true"
+            [errorMessage]="getFieldError('currentPassword')"
+          ></app-form-input>
+          <button
+            type="button"
+            class="cg-password-eye-btn"
+            (click)="showCurrentPassword.set(!showCurrentPassword())"
+            [attr.aria-label]="showCurrentPassword() ? 'Hide current password' : 'Show current password'"
+          >
+            {{ showCurrentPassword() ? '👁️' : '🔒' }}
+          </button>
+        </div>
+
+        <!-- New Password -->
+        <div class="cg-password-field-wrap">
+          <app-form-input
+            formControlName="newPassword"
+            label="New Password"
+            [type]="showNewPassword() ? 'text' : 'password'"
+            placeholder="Min 8 characters with letters, numbers, and symbols"
+            [required]="true"
+            hintMessage="Must be at least 8 characters and include uppercase, lowercase, numbers, and symbols."
+            [errorMessage]="getFieldError('newPassword')"
+          ></app-form-input>
+          <button
+            type="button"
+            class="cg-password-eye-btn"
+            (click)="showNewPassword.set(!showNewPassword())"
+            [attr.aria-label]="showNewPassword() ? 'Hide new password' : 'Show new password'"
+          >
+            {{ showNewPassword() ? '👁️' : '🔒' }}
+          </button>
+        </div>
+
+        <!-- Password Strength Meter -->
+        @if (passwordForm.get('newPassword')?.value) {
+          <div class="cg-strength-meter" aria-live="polite">
+            <div class="cg-strength-header">
+              <span class="cg-strength-title">Password Complexity:</span>
+              <span class="cg-strength-val cg-strength-val--{{ passwordStrengthScore }}">
+                {{ passwordStrengthLabel }}
+              </span>
+            </div>
+            <div class="cg-strength-bar-track">
+              <div
+                class="cg-strength-bar-fill cg-strength-bar-fill--{{ passwordStrengthScore }}"
+                [style.width.%]="passwordStrengthScore * 25"
+              ></div>
+            </div>
+          </div>
+        }
+
+        <!-- Confirm New Password -->
+        <div class="cg-password-field-wrap">
+          <app-form-input
+            formControlName="confirmPassword"
+            label="Confirm New Password"
+            [type]="showConfirmPassword() ? 'text' : 'password'"
+            placeholder="Re-enter new password"
+            [required]="true"
+            [errorMessage]="getFieldError('confirmPassword')"
+          ></app-form-input>
+          <button
+            type="button"
+            class="cg-password-eye-btn"
+            (click)="showConfirmPassword.set(!showConfirmPassword())"
+            [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'"
+          >
+            {{ showConfirmPassword() ? '👁️' : '🔒' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="cg-form-footer-right">
+        <app-button
+          variant="primary"
+          type="submit"
+          size="md"
+          [loading]="isSavingPassword()"
+        >
+          Update Password (Demo)
+        </app-button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Section 2: Simulated Two-Factor Authentication -->
+  <section class="cg-security-section" aria-labelledby="heading-2fa">
+    <div class="cg-card-row">
+      <div class="cg-card-row-info">
+        <h4 id="heading-2fa" class="cg-section-title">Two-Factor Authentication (2FA)</h4>
+        <p class="cg-section-desc">
+          Add an extra verification layer to your account.
+          <strong>Demo Notice:</strong> This preview does not actually secure an account. Real SMS or Authenticator verification will connect to the MSSQL backend.
+        </p>
+        <div class="cg-status-row">
+          <span class="cg-status-indicator" [class.cg-status-indicator--on]="profile().security.twoFactorEnabled"></span>
+          <span class="cg-status-text">
+            Status: {{ profile().security.twoFactorEnabled ? 'Simulated Enabled' : 'Simulated Disabled' }}
+          </span>
+        </div>
+      </div>
+      <div class="cg-card-row-action">
+        <app-button
+          [variant]="profile().security.twoFactorEnabled ? 'outline' : 'secondary'"
+          size="sm"
+          (btnClick)="onToggle2Fa()"
+          [loading]="isToggling2Fa()"
+        >
+          {{ profile().security.twoFactorEnabled ? 'Disable Demo 2FA' : 'Enable Demo 2FA' }}
+        </app-button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Active Login Sessions (Simulated) -->
+  <section class="cg-security-section" aria-labelledby="heading-sessions">
+    <h4 id="heading-sessions" class="cg-section-title">Active Devices & Sessions</h4>
+    <p class="cg-section-desc">
+      Devices currently signed in to this demo session. You may simulate revoking access from older devices.
+    </p>
+
+    <div class="cg-sessions-list">
+      @for (session of profile().security.activeSessions; track session.id) {
+        <div class="cg-session-card">
+          <div class="cg-session-device-icon" aria-hidden="true">
+            {{ session.device.includes('iPhone') ? '📱' : '💻' }}
+          </div>
+          <div class="cg-session-details">
+            <div class="cg-session-name-row">
+              <strong>{{ session.device }} — {{ session.browser }}</strong>
+              @if (session.isCurrent) {
+                <span class="cg-session-current-badge">Current Device</span>
+              }
+            </div>
+            <span class="cg-session-meta">
+              {{ session.location }} • {{ session.ipAddress }} • {{ session.lastActive }}
+            </span>
+          </div>
+          <div class="cg-session-action">
+            @if (!session.isCurrent) {
+              <app-button
+                variant="ghost"
+                size="sm"
+                (btnClick)="onRevokeSession(session.id)"
+                [loading]="isRevokingSession() === session.id"
+                ariaLabel="Revoke session on {{ session.device }}"
+              >
+                Revoke
+              </app-button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Section 4: Account Danger Zone -->
+  <section class="cg-danger-zone" aria-labelledby="heading-danger">
+    <div class="cg-danger-header">
+      <h4 id="heading-danger" class="cg-danger-title">Account Management & Deletion</h4>
+      <span class="cg-danger-badge">Danger Zone</span>
+    </div>
+    <p class="cg-danger-desc">
+      Temporary deactivation freezes your profile while preserving your homestay history.
+      Permanent deletion resets this in-memory session.
+    </p>
+
+    <div class="cg-danger-actions">
+      <app-button
+        variant="outline"
+        size="sm"
+        (btnClick)="openDeactivateDialog()"
+      >
+        Deactivate Account (Demo)
+      </app-button>
+
+      <app-button
+        variant="danger"
+        size="sm"
+        (btnClick)="openDeleteDialog()"
+      >
+        Delete Account (Demo)
+      </app-button>
+    </div>
+  </section>
+
+  <!-- Confirmation Dialog: Deactivate Account -->
+  <app-confirmation-dialog
+    [isOpen]="isDeactivateDialogOpen()"
+    variant="warning"
+    title="Deactivate CeylonGo Account (Demo)?"
+    message="This is a demonstration of the deactivation flow. In production, this temporarily freezes your traveler profile and hides public comments. No database records in Microsoft SQL Server will be altered."
+    confirmText="Confirm Deactivation (Demo)"
+    cancelText="Cancel"
+    [loading]="isDialogLoading()"
+    (confirm)="confirmDeactivation()"
+    (close)="isDeactivateDialogOpen.set(false)"
+  ></app-confirmation-dialog>
+
+  <!-- Confirmation Dialog: Delete Account -->
+  <app-confirmation-dialog
+    [isOpen]="isDeleteDialogOpen()"
+    variant="danger"
+    title="Permanently Delete Account (Demo)?"
+    message="This action will reset your in-memory demo profile session back to initial values. In production, this queues a soft-delete request across MSSQL tables [dbo].[Users], [dbo].[UserProfiles], and [dbo].[UserPreferences]."
+    confirmText="Yes, Delete Account (Demo)"
+    cancelText="Keep Account"
+    [loading]="isDialogLoading()"
+    (confirm)="confirmDeletion()"
+    (close)="isDeleteDialogOpen.set(false)"
+  ></app-confirmation-dialog>
+</div>

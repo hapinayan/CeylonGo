@@ -1,0 +1,207 @@
+<div class="cg-panel-card" role="region" aria-label="Preferences Settings">
+  <!-- Card Header -->
+  <div class="cg-panel-header">
+    <div>
+      <h3 class="cg-panel-title">Regional & Platform Preferences</h3>
+      <p class="cg-panel-subtitle">
+        Customize interface language, display currency, and notification alert channels.
+      </p>
+    </div>
+    <span class="cg-panel-badge">In-Memory Demo</span>
+  </div>
+
+  <!-- Dynamic Notification Alerts -->
+  @if (successNotice()) {
+    <div class="cg-alert cg-alert--success" role="status" aria-live="polite">
+      <span class="cg-alert-icon" aria-hidden="true">✓</span>
+      <span class="cg-alert-text">{{ successNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss success notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  @if (errorNotice()) {
+    <div class="cg-alert cg-alert--error" role="alert">
+      <span class="cg-alert-icon" aria-hidden="true">⚠️</span>
+      <span class="cg-alert-text">{{ errorNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss error notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  <!-- Preferences Form -->
+  <form [formGroup]="preferencesForm" (ngSubmit)="onSubmit()" class="cg-prefs-form" novalidate>
+    <!-- Section 1: Regional Localization -->
+    <div class="cg-section-group">
+      <h4 class="cg-group-title">Localization & Currency</h4>
+      <p class="cg-group-desc">Select how prices and interface text are displayed throughout CeylonGo.</p>
+
+      <div class="cg-form-grid">
+        <div class="cg-field-wrapper">
+          <app-select
+            label="Preferred Interface Language"
+            [options]="languageOptions"
+            [value]="preferencesForm.get('language')?.value"
+            (valueChange)="onLanguageChange($event)"
+            [required]="true"
+          ></app-select>
+          <span class="cg-field-hint">Supports English, සිංහල (Sinhala), and தமிழ் (Tamil).</span>
+        </div>
+
+        <div class="cg-field-wrapper">
+          <app-select
+            label="Display Currency"
+            [options]="currencyOptions"
+            [value]="preferencesForm.get('currency')?.value"
+            (valueChange)="onCurrencyChange($event)"
+            [required]="true"
+          ></app-select>
+          <span class="cg-field-hint">All homestays bill in LKR; conversions are approximate.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Notification Channels (Demo Notice) -->
+    <div class="cg-section-group">
+      <div class="cg-group-header">
+        <div>
+          <h4 class="cg-group-title">Notification Channels</h4>
+          <p class="cg-group-desc">Choose which communication channels you prefer for booking updates.</p>
+        </div>
+        <span class="cg-demo-tag">Simulated Demo Settings</span>
+      </div>
+
+      <!-- Demo Notification Disclaimer Banner -->
+      <div class="cg-disclaimer-box">
+        <span class="cg-disclaimer-icon" aria-hidden="true">🔔</span>
+        <span class="cg-disclaimer-text">
+          Demo Notice: In this prototype, notification toggles are stored in memory only.
+          No actual emails, SMS messages, or WhatsApp communications will be sent to your phone.
+        </span>
+      </div>
+
+      <!-- Notification Channel Options List -->
+      <div class="cg-notif-cards-list">
+        <!-- Email Confirmations -->
+        <label class="cg-notif-card" for="cg-toggle-email-booking">
+          <div class="cg-notif-icon-col" aria-hidden="true">📧</div>
+          <div class="cg-notif-content-col">
+            <span class="cg-notif-label">Email Booking Confirmations</span>
+            <span class="cg-notif-desc">Receive PDF booking vouchers, check-in instructions, and host contact details via email.</span>
+          </div>
+          <div class="cg-notif-toggle-col">
+            <input
+              type="checkbox"
+              id="cg-toggle-email-booking"
+              formControlName="emailBooking"
+              class="cg-checkbox"
+            />
+          </div>
+        </label>
+
+        <!-- Host Email Messages -->
+        <label class="cg-notif-card" for="cg-toggle-email-host">
+          <div class="cg-notif-icon-col" aria-hidden="true">💬</div>
+          <div class="cg-notif-content-col">
+            <span class="cg-notif-label">Homestay Host Messages</span>
+            <span class="cg-notif-desc">Get notified by email when a host sends you arrival notes or meal coordination inquiries.</span>
+          </div>
+          <div class="cg-notif-toggle-col">
+            <input
+              type="checkbox"
+              id="cg-toggle-email-host"
+              formControlName="emailHost"
+              class="cg-checkbox"
+            />
+          </div>
+        </label>
+
+        <!-- SMS Booking Alerts -->
+        <label class="cg-notif-card" for="cg-toggle-sms-booking">
+          <div class="cg-notif-icon-col" aria-hidden="true">📱</div>
+          <div class="cg-notif-content-col">
+            <span class="cg-notif-label">SMS Alerts for Bookings</span>
+            <span class="cg-notif-desc">Receive real-time text message alerts when a homestay booking is confirmed or updated.</span>
+          </div>
+          <div class="cg-notif-toggle-col">
+            <input
+              type="checkbox"
+              id="cg-toggle-sms-booking"
+              formControlName="smsBooking"
+              class="cg-checkbox"
+            />
+          </div>
+        </label>
+
+        <!-- WhatsApp Trip Support -->
+        <label class="cg-notif-card" for="cg-toggle-whatsapp-booking">
+          <div class="cg-notif-icon-col" aria-hidden="true">💬</div>
+          <div class="cg-notif-content-col">
+            <span class="cg-notif-label">WhatsApp Check-in Support</span>
+            <span class="cg-notif-desc">Receive Google Maps directions and host WhatsApp connectivity for rural stays.</span>
+          </div>
+          <div class="cg-notif-toggle-col">
+            <input
+              type="checkbox"
+              id="cg-toggle-whatsapp-booking"
+              formControlName="whatsappBooking"
+              class="cg-checkbox"
+            />
+          </div>
+        </label>
+
+        <!-- Seasonal Festival Offers -->
+        <label class="cg-notif-card" for="cg-toggle-email-promos">
+          <div class="cg-notif-icon-col" aria-hidden="true">🎉</div>
+          <div class="cg-notif-content-col">
+            <span class="cg-notif-label">Sri Lankan Festival & Seasonal Promotions</span>
+            <span class="cg-notif-desc">Occasional newsletters regarding Esala Perahera homestays, tea harvest experiences, and seasonal discounts.</span>
+          </div>
+          <div class="cg-notif-toggle-col">
+            <input
+              type="checkbox"
+              id="cg-toggle-email-promos"
+              formControlName="emailPromos"
+              class="cg-checkbox"
+            />
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Form Footer Actions -->
+    <div class="cg-form-actions">
+      <app-button
+        variant="secondary"
+        type="button"
+        size="md"
+        (btnClick)="onCancel()"
+        [disabled]="isSaving()"
+      >
+        Cancel Changes
+      </app-button>
+
+      <app-button
+        variant="primary"
+        type="submit"
+        size="md"
+        [loading]="isSaving()"
+        [disabled]="preferencesForm.pristine && !isSaving()"
+      >
+        Save Preferences
+      </app-button>
+    </div>
+  </form>
+</div>

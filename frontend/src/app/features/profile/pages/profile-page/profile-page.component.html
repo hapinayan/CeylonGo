@@ -1,0 +1,114 @@
+<app-page-container size="lg" padding="md">
+  <!-- Page Header with Breadcrumbs Trail & Actions -->
+  <app-page-header
+    title="My Profile & Account Settings"
+    kicker="TRAVELER DASHBOARD"
+    subtitle="Manage your personal details, travel preferences, and security credentials."
+    [bordered]="true"
+  >
+    <app-breadcrumbs breadcrumbs [items]="breadcrumbs"></app-breadcrumbs>
+
+    <div actions class="cg-profile-header-actions">
+      <span class="cg-profile-header-badge">
+        <span class="cg-pulse-dot" aria-hidden="true"></span>
+        {{ profile().personal.verificationLabel }}
+      </span>
+      <app-button variant="outline" size="sm">
+        Preview Public Profile
+      </app-button>
+    </div>
+  </app-page-header>
+
+  <!-- Demo Mode Architecture Banner -->
+  <div class="cg-demo-notice-banner" role="status" aria-live="polite">
+    <div class="cg-demo-notice-icon" aria-hidden="true">ℹ️</div>
+    <div class="cg-demo-notice-body">
+      <strong class="cg-demo-notice-title">In-Memory Prototype Session (Demo Mode)</strong>
+      <p class="cg-demo-notice-text">
+        All profile information is held strictly in memory for this browser session.
+        In accordance with our privacy architecture, no sensitive personal data is written to localStorage.
+        Full persistence to Microsoft SQL Server (MSSQL) via FastAPI REST endpoints is scheduled for backend rollout.
+      </p>
+    </div>
+  </div>
+
+  <!-- Reusable Profile Header with In-Memory Avatar Photo Selection -->
+  <app-profile-header></app-profile-header>
+
+  <!-- Accessible & Responsive Profile Navigation Tabs -->
+  <nav class="cg-profile-tabs-wrapper" aria-label="Profile navigation sections">
+    <div class="cg-profile-tabs" role="tablist" aria-label="Profile Sections">
+      @for (tab of tabs; track tab.id) {
+        <button
+          type="button"
+          class="cg-profile-tab-btn"
+          [class.cg-profile-tab-btn--active]="activeTab() === tab.id"
+          [attr.aria-selected]="activeTab() === tab.id"
+          [attr.aria-controls]="'cg-panel-' + tab.id"
+          [id]="'cg-profile-tab-' + tab.id"
+          role="tab"
+          [tabIndex]="activeTab() === tab.id ? 0 : -1"
+          (click)="selectTab(tab.id)"
+          (keydown)="handleTabKeydown($event, $index)"
+        >
+          <span class="cg-tab-icon" aria-hidden="true">{{ tab.icon }}</span>
+          <span class="cg-tab-label">{{ tab.label }}</span>
+          @if (tab.badge) {
+            <span class="cg-tab-badge">{{ tab.badge }}</span>
+          }
+        </button>
+      }
+    </div>
+  </nav>
+
+  <!-- Tab Panels Section -->
+  <main class="cg-profile-tab-content">
+    <!-- Panel 1: Editable Personal Information -->
+    @if (activeTab() === 'personal') {
+      <div
+        id="cg-panel-personal"
+        class="cg-tab-panel"
+        role="tabpanel"
+        aria-labelledby="cg-profile-tab-personal"
+      >
+        <app-personal-info-tab></app-personal-info-tab>
+      </div>
+    }
+
+    <!-- Panel 2: Security & Login -->
+    @if (activeTab() === 'security') {
+      <div
+        id="cg-panel-security"
+        class="cg-tab-panel"
+        role="tabpanel"
+        aria-labelledby="cg-profile-tab-security"
+      >
+        <app-security-tab></app-security-tab>
+      </div>
+    }
+
+    <!-- Panel 3: Editable Preferences -->
+    @if (activeTab() === 'preferences') {
+      <div
+        id="cg-panel-preferences"
+        class="cg-tab-panel"
+        role="tabpanel"
+        aria-labelledby="cg-profile-tab-preferences"
+      >
+        <app-preferences-tab></app-preferences-tab>
+      </div>
+    }
+
+    <!-- Panel 4: Emergency Contact & Travel Details -->
+    @if (activeTab() === 'emergency') {
+      <div
+        id="cg-panel-emergency"
+        class="cg-tab-panel"
+        role="tabpanel"
+        aria-labelledby="cg-profile-tab-emergency"
+      >
+        <app-emergency-contact-tab></app-emergency-contact-tab>
+      </div>
+    }
+  </main>
+</app-page-container>
