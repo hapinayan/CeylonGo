@@ -1,0 +1,223 @@
+@use 'styles/mixins' as mixins;
+
+.cg-footer {
+  background-color: #ffffff;
+  border-top: 1px solid var(--cg-border);
+  padding: 3.5rem 0 2rem;
+  color: var(--cg-text-primary);
+}
+
+.cg-footer-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  @include mixins.respond-to('lg') {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3.5rem;
+  }
+}
+
+// Left Brand Column
+.cg-footer-brand {
+  max-width: 260px;
+  flex-shrink: 0;
+
+  .cg-footer-logo-link {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .cg-footer-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .cg-footer-tagline {
+    font-size: 0.875rem;
+    color: var(--cg-text-muted);
+    margin: 0.65rem 0 0;
+    line-height: 1.4;
+  }
+}
+
+// Right 4-Column Grid
+.cg-footer-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  flex: 1;
+
+  @include mixins.respond-to('md') {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+.cg-footer-col {
+  display: flex;
+  flex-direction: column;
+
+  .cg-footer-col-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--cg-text-primary);
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+.cg-footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+
+  a {
+    font-size: 0.875rem;
+    color: var(--cg-text-secondary);
+    text-decoration: none;
+    transition: color var(--cg-transition-fast);
+
+    &:hover {
+      color: var(--cg-primary);
+    }
+  }
+}
+
+// Social Icons (Matching Reference)
+.cg-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.cg-social-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--cg-bg-light);
+  border: 1px solid var(--cg-border);
+  color: var(--cg-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--cg-transition-fast);
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover {
+    background-color: var(--cg-primary);
+    color: #ffffff;
+    border-color: var(--cg-primary);
+    transform: translateY(-2px);
+  }
+}
+
+// App Badges (Black Rounded Cards)
+.cg-app-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cg-app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  width: fit-content;
+  user-select: none;
+  cursor: pointer;
+  transition: transform var(--cg-transition-fast), opacity var(--cg-transition-fast);
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .cg-badge-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .cg-badge-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .cg-badge-sub {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: #d1d5db;
+  }
+
+  .cg-badge-main {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+  }
+}
+
+// Bottom Legal Bar
+.cg-footer-bottom {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cg-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  align-items: center;
+
+  @include mixins.respond-to('md') {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.cg-footer-copyright {
+  font-size: 0.8125rem;
+  color: var(--cg-text-muted);
+  margin: 0;
+}
+
+.cg-footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.8125rem;
+
+  a {
+    color: var(--cg-text-muted);
+    text-decoration: none;
+    transition: color var(--cg-transition-fast);
+
+    &:hover {
+      color: var(--cg-primary);
+    }
+  }
+
+  .cg-legal-sep {
+    color: #cbd5e1;
+    user-select: none;
+  }
+}

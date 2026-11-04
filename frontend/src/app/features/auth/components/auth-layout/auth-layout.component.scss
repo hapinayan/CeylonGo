@@ -1,0 +1,253 @@
+@use 'styles/tokens' as *;
+
+.cg-auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-family: var(--cg-font-family);
+}
+
+.cg-auth-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 43, 92, 0.45) 0%,
+    rgba(8, 43, 92, 0.25) 45%,
+    rgba(8, 43, 92, 0.55) 100%
+  );
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  z-index: 1;
+}
+
+.cg-auth-top-bar {
+  position: relative;
+  z-index: 10;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 1rem 1.25rem;
+  }
+}
+
+.cg-auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--cg-radius-full, 9999px);
+  color: #ffffff;
+  font-size: var(--cg-font-size-sm, 0.875rem);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--cg-transition-fast, 150ms cubic-bezier(0.4, 0, 0.2, 1));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  .cg-back-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateX(-2px);
+    color: #ffffff;
+
+    .cg-back-icon {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cg-accent);
+    outline-offset: 2px;
+  }
+}
+
+.cg-auth-stage {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem 2.5rem;
+}
+
+.cg-auth-content-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+
+  @media (min-width: $breakpoint-lg) {
+    display: grid;
+    grid-template-columns: minmax(380px, 450px) minmax(320px, 460px);
+    gap: 4rem;
+    max-width: 1040px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    gap: 5.5rem;
+    max-width: 1120px;
+  }
+}
+
+.cg-auth-card {
+  width: 100%;
+  background: var(--cg-background, #ffffff);
+  border-radius: 24px;
+  padding: 2.25rem 2rem;
+  box-shadow:
+    0 24px 50px -10px rgba(8, 43, 92, 0.28),
+    0 10px 24px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  box-sizing: border-box;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 1.75rem 1.25rem;
+    border-radius: 20px;
+  }
+}
+
+.cg-auth-card-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cg-auth-logo-link {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    opacity: 0.92;
+    transform: scale(1.02);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cg-primary);
+    border-radius: 8px;
+  }
+}
+
+.cg-auth-logo {
+  height: 54px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+
+  @media (max-width: $breakpoint-sm) {
+    height: 48px;
+  }
+}
+
+.cg-auth-heading {
+  font-family: var(--cg-font-family);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--cg-primary, #082b5c);
+  margin: 0.25rem 0 0.35rem;
+  letter-spacing: -0.025em;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+.cg-auth-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+  max-width: 340px;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 0.875rem;
+  }
+}
+
+.cg-auth-card-body {
+  width: 100%;
+}
+
+// Scenic Tagline on Desktop (Script font)
+.cg-auth-scenic-tagline {
+  display: none;
+
+  @media (min-width: $breakpoint-lg) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    color: #ffffff;
+    font-family: var(--cg-font-family-script, 'Caveat', 'Satisfy', cursive);
+    font-size: 3.25rem;
+    line-height: 1.15;
+    text-shadow:
+      0 4px 18px rgba(0, 0, 0, 0.5),
+      0 2px 6px rgba(8, 43, 92, 0.7);
+    user-select: none;
+    padding-left: 1rem;
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    font-size: 3.85rem;
+  }
+
+  .cg-tagline-line {
+    display: block;
+    letter-spacing: 0.02em;
+
+    &--1 {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    &--highlight {
+      font-weight: 700;
+      color: #ffbe53;
+      text-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(255, 159, 28, 0.4);
+    }
+
+    &--sub {
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+
+  .cg-tagline-brush-accent {
+    width: 140px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff9f1c 0%, rgba(255, 159, 28, 0) 100%);
+    border-radius: 9999px;
+    margin-top: 1rem;
+    box-shadow: 0 0 10px rgba(255, 159, 28, 0.5);
+  }
+}

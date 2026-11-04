@@ -1,0 +1,68 @@
+<div
+  class="cg-form-group"
+  [class.cg-form-group--error]="!!errorMessage()"
+  [class.cg-form-group--disabled]="disabled()"
+  [class.cg-form-group--focused]="isFocused()"
+>
+  @if (label()) {
+    <label [for]="inputId()" class="cg-form-label">
+      {{ label() }}
+      @if (required()) {
+        <span class="cg-form-label__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="cg-input-wrapper">
+    <input
+      [id]="inputId()"
+      [type]="effectiveType"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [ngModel]="innerValue()"
+      (ngModelChange)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      class="cg-input"
+      [attr.aria-invalid]="!!errorMessage()"
+      [attr.aria-describedby]="errorMessage() ? inputId() + '-error' : (hintMessage() ? inputId() + '-hint' : null)"
+    />
+
+    @if (type() === 'password') {
+      <button
+        type="button"
+        class="cg-password-toggle"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'"
+        tabindex="-1"
+      >
+        @if (isPasswordVisible()) {
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+            <line x1="2" y1="2" x2="22" y2="22" />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        }
+      </button>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p [id]="inputId() + '-error'" class="cg-form-error" role="alert">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+      <span>{{ errorMessage() }}</span>
+    </p>
+  } @else if (hintMessage()) {
+    <p [id]="inputId() + '-hint'" class="cg-form-hint">{{ hintMessage() }}</p>
+  }
+</div>

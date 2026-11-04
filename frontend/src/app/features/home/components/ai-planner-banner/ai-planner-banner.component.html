@@ -1,0 +1,72 @@
+<section class="cg-ai-promo-section" aria-label="AI Travel Planner Promotional Banner">
+  <div class="cg-container">
+    <div class="cg-ai-banner-card">
+      <!-- Background Scenic Photography -->
+      <div class="cg-ai-bg">
+        <img
+          src="assets/images/ai/ai_planner_bg.jpg"
+          alt="Scenic coastal temple and coastline in Sri Lanka"
+          class="cg-ai-img"
+          loading="lazy"
+        />
+        <div class="cg-ai-gradient-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- Banner Content Inner -->
+      <div class="cg-ai-banner-inner">
+        <!-- Left Column: Pitch & CTA -->
+        <div class="cg-ai-banner-content">
+          <span class="cg-ai-kicker">LET AI PLAN FOR YOU</span>
+          <h2 class="cg-ai-title">
+            Your Perfect <span class="cg-ai-title-accent">Sri Lanka</span> Trip
+          </h2>
+          <p class="cg-ai-subtitle">
+            Get a personalized itinerary based on your interests, budget and travel style.
+          </p>
+          <a routerLink="/ai-planner" class="cg-ai-cta-btn">
+            <span>Try AI Trip Planner</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Right Column: Layered Itinerary Preview Cards (Matching Reference) -->
+        <div class="cg-ai-preview-wrap">
+          <!-- Foreground Main Card: 7 Days in Sri Lanka -->
+          <div class="cg-preview-card cg-preview-card--main">
+            <div class="cg-preview-card-header">
+              <span class="cg-preview-card-title">7 Days in Sri Lanka</span>
+              <svg class="cg-preview-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+
+            <div class="cg-preview-days-list">
+              @for (item of previewDays; track item.day) {
+                <div class="cg-preview-day-item">
+                  <img [src]="item.imageUrl" [alt]="item.title" class="cg-day-thumb" loading="lazy" />
+                  <div class="cg-day-info">
+                    <span class="cg-day-label">{{ item.day }}</span>
+                    <span class="cg-day-title">{{ item.title }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Background Layered Card (Highlights) -->
+          <div class="cg-preview-card cg-preview-card--layer" aria-hidden="true">
+            <ul class="cg-layer-benefits">
+              <li>Personalized itinerary</li>
+              <li>Best destinations</li>
+              <li>Local experiences</li>
+              <li>Estimated budget</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

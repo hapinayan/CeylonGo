@@ -1,0 +1,44 @@
+<section class="cg-testimonials-section" aria-label="What Our Community Says">
+  <div class="cg-container">
+    <!-- Section Header -->
+    <div class="cg-test-header">
+      <h2 class="cg-test-title">What Our Community Says</h2>
+      <a routerLink="/community" class="cg-test-view-all">
+        <span>View All Reviews</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- 3-Column Responsive Grid -->
+    <div class="cg-testimonials-grid">
+      @for (item of testimonials; track item.id) {
+        <div class="cg-testimonial-card">
+          <div class="cg-test-top">
+            <img [src]="item.avatarUrl" [alt]="item.name + ' from ' + item.country" class="cg-test-avatar" loading="lazy" />
+            <div class="cg-test-quote-wrap">
+              <p class="cg-test-quote">"{{ item.quote }}"</p>
+            </div>
+          </div>
+
+          <div class="cg-test-bottom">
+            <div class="cg-test-author">
+              <span class="cg-author-name">{{ item.name }}</span>
+              <span class="cg-author-country">{{ item.country }}</span>
+            </div>
+
+            <div class="cg-test-stars" aria-label="5 stars rating">
+              <span class="cg-star">★</span>
+              <span class="cg-star">★</span>
+              <span class="cg-star">★</span>
+              <span class="cg-star">★</span>
+              <span class="cg-star">★</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

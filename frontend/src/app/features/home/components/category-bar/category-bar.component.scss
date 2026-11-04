@@ -1,0 +1,73 @@
+@use 'styles/mixins' as mixins;
+
+.cg-quick-benefits-section {
+  padding: 1.75rem 0 2rem;
+  background-color: #ffffff;
+}
+
+.cg-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+
+  @include mixins.respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mixins.respond-to('lg') {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.cg-benefit-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  transition: transform var(--cg-transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.cg-benefit-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--cg-transition-fast);
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .cg-benefit-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.cg-benefit-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-benefit-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--cg-primary);
+  margin: 0 0 0.15rem;
+  line-height: 1.3;
+}
+
+.cg-benefit-desc {
+  font-size: 0.8125rem;
+  color: var(--cg-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}

@@ -1,0 +1,21 @@
+<header class="cg-page-header" [class.cg-page-header--bordered]="bordered()">
+  <div class="cg-page-header__breadcrumbs">
+    <ng-content select="[breadcrumbs]"></ng-content>
+  </div>
+
+  <div class="cg-page-header__main">
+    <div class="cg-page-header__info">
+      @if (kicker()) {
+        <span class="cg-page-header__kicker">{{ kicker() }}</span>
+      }
+      <h1 class="cg-page-header__title">{{ title() }}</h1>
+      @if (subtitle()) {
+        <p class="cg-page-header__subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+
+    <div class="cg-page-header__actions">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+  </div>
+</header>

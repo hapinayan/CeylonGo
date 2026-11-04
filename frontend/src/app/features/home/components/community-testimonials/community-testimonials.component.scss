@@ -1,0 +1,142 @@
+@use 'styles/mixins' as mixins;
+
+.cg-testimonials-section {
+  padding: 1.5rem 0 3.5rem;
+  background-color: #ffffff;
+}
+
+.cg-test-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.cg-test-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 800;
+  color: var(--cg-primary);
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.cg-test-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0284c7;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--cg-transition-fast);
+
+  svg {
+    width: 15px;
+    height: 15px;
+    transition: transform var(--cg-transition-fast);
+  }
+
+  &:hover {
+    color: var(--cg-primary);
+    svg {
+      transform: translateX(3px);
+    }
+  }
+}
+
+.cg-testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @include mixins.respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cg-testimonial-card {
+  background-color: #ffffff;
+  border: 1px solid var(--cg-border);
+  border-radius: 12px;
+  padding: 1.15rem 1.15rem 1rem;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--cg-transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.09);
+    border-color: #cbd5e1;
+  }
+}
+
+.cg-test-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.cg-test-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid var(--cg-border);
+}
+
+.cg-test-quote-wrap {
+  flex: 1;
+}
+
+.cg-test-quote {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cg-text-secondary);
+  margin: 0;
+}
+
+.cg-test-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 3.35rem; // Align with quote start
+
+  @media (max-width: 480px) {
+    padding-left: 0;
+  }
+}
+
+.cg-test-author {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-author-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--cg-primary);
+  line-height: 1.2;
+}
+
+.cg-author-country {
+  font-size: 0.6875rem;
+  color: var(--cg-text-muted);
+  line-height: 1.2;
+}
+
+.cg-test-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+
+  .cg-star {
+    color: #f59e0b;
+    font-size: 0.8125rem;
+  }
+}

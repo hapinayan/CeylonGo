@@ -1,0 +1,483 @@
+<div class="cg-register-page">
+  <!-- Subtle Topographic Contour Background SVG -->
+  <div class="cg-bg-topo" aria-hidden="true">
+    <svg viewBox="0 0 1000 700" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-80 140 C 120 60, 240 220, 440 120 C 640 20, 760 180, 960 100" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5" />
+      <path d="M-80 200 C 100 120, 260 280, 460 180 C 660 80, 780 240, 960 160" stroke="#94A3B8" stroke-width="1.2" opacity="0.45" />
+      <path d="M-80 260 C 80 180, 280 340, 480 240 C 680 140, 800 300, 960 220" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="6 6" opacity="0.38" />
+      <path d="M-80 320 C 60 240, 300 400, 500 300 C 700 200, 820 360, 960 280" stroke="#94A3B8" stroke-width="1.2" opacity="0.32" />
+      <path d="M-80 380 C 40 300, 320 460, 520 360 C 720 260, 840 420, 960 340" stroke="#CBD5E1" stroke-width="1" opacity="0.25" />
+      <path d="M-80 440 C 20 360, 340 520, 540 420 C 740 320, 860 480, 960 400" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3" opacity="0.2" />
+    </svg>
+  </div>
+
+  <!-- Subtle Tropical Palm Silhouette in Bottom-Left -->
+  <div class="cg-bg-palm" aria-hidden="true">
+    <svg viewBox="0 0 320 320" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 310 Q 70 230, 160 200 Q 230 180, 290 190 Q 210 205, 150 240 Q 90 280, 10 310 Z" opacity="0.14" />
+      <path d="M10 310 Q 90 210, 190 160 Q 260 130, 310 135 Q 230 160, 170 210 Q 100 260, 10 310 Z" opacity="0.12" />
+      <path d="M10 310 Q 120 190, 220 120 Q 280 80, 320 75 Q 250 115, 190 180 Q 110 250, 10 310 Z" opacity="0.15" />
+      <path d="M10 310 Q 140 180, 240 90 Q 290 40, 320 20 Q 260 75, 200 155 Q 120 240, 10 310 Z" opacity="0.11" />
+      <path d="M10 310 Q 80 250, 120 230 Q 170 210, 220 220 Q 160 240, 110 270 Q 60 295, 10 310 Z" opacity="0.1" />
+      <path d="M10 310 Q 160 220, 250 200 Q 300 195, 310 200 Q 260 215, 190 250 Q 100 290, 10 310 Z" opacity="0.08" />
+    </svg>
+  </div>
+
+  <!-- Top Navigation Link -->
+  <div class="cg-top-nav">
+    <a routerLink="/" class="cg-back-home" title="Return to CeylonGo Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+      <span>Back to CeylonGo</span>
+    </a>
+  </div>
+
+  <!-- Main Split-Screen Container -->
+  <div class="cg-register-split-container">
+    
+    <!-- LEFT SECTION: Registration Form Panel (~48%) -->
+    <section class="cg-register-left-section" aria-labelledby="register-heading">
+      <div class="cg-register-card">
+        
+        <!-- Official CeylonGo Logo -->
+        <div class="cg-logo-wrapper">
+          <a routerLink="/" aria-label="CeylonGo Home">
+            <img
+              src="assets/branding/ceylongo-logo.png"
+              alt="CeylonGo — Discover Local. Feel at Home."
+              class="cg-official-logo"
+              width="168"
+              height="66"
+            />
+          </a>
+        </div>
+
+        <!-- Heading & Subtitle -->
+        <div class="cg-header-block">
+          <h1 id="register-heading" class="cg-register-title">Create Your Account</h1>
+          <p class="cg-register-subtitle">
+            Join CeylonGo and start exploring<br class="cg-hide-mobile" /> authentic Sri Lankan experiences.
+          </p>
+        </div>
+
+        <!-- Demo Success Message Banner -->
+        @if (demoSuccessMessage()) {
+          <div class="cg-alert-banner cg-alert-success" role="status" aria-live="polite">
+            <div class="cg-alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="cg-alert-text">
+              <strong>Demo Simulation</strong>
+              <p>{{ demoSuccessMessage() }}</p>
+            </div>
+            <button type="button" class="cg-alert-dismiss" (click)="dismissDemoBanner()" aria-label="Dismiss banner">×</button>
+          </div>
+        }
+
+        <!-- Google Notice Banner -->
+        @if (googleNotice()) {
+          <div class="cg-alert-banner cg-alert-info" role="status" aria-live="polite">
+            <div class="cg-alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            </div>
+            <div class="cg-alert-text">
+              <p>{{ googleNotice() }}</p>
+            </div>
+            <button type="button" class="cg-alert-dismiss" (click)="dismissGoogleNotice()" aria-label="Dismiss notice">×</button>
+          </div>
+        }
+
+        <!-- Terms Notice Banner -->
+        @if (termsNotice()) {
+          <div class="cg-alert-banner cg-alert-info" role="status" aria-live="polite">
+            <div class="cg-alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            </div>
+            <div class="cg-alert-text">
+              <p>{{ termsNotice() }}</p>
+            </div>
+            <button type="button" class="cg-alert-dismiss" (click)="dismissTermsNotice()" aria-label="Dismiss notice">×</button>
+          </div>
+        }
+
+        <!-- Registration Form -->
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="cg-form" novalidate>
+          
+          <!-- Full Name Field -->
+          <div class="cg-field-group">
+            <div class="cg-input-box" [class.has-error]="isFieldInvalid('fullName')">
+              <span class="cg-input-icon cg-icon-user" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <div class="cg-input-content">
+                <label for="register-fullname" class="cg-field-label">Full name</label>
+                <input
+                  id="register-fullname"
+                  type="text"
+                  formControlName="fullName"
+                  placeholder="Enter your full name"
+                  class="cg-input"
+                  [class.is-invalid]="isFieldInvalid('fullName')"
+                  autocomplete="name"
+                  aria-required="true"
+                  [attr.aria-invalid]="isFieldInvalid('fullName')"
+                  [attr.aria-describedby]="isFieldInvalid('fullName') ? 'fullname-error' : null"
+                />
+              </div>
+            </div>
+            @if (isFieldInvalid('fullName')) {
+              <div id="fullname-error" class="cg-error-msg" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ getFieldError('fullName') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Email Address Field -->
+          <div class="cg-field-group">
+            <div class="cg-input-box" [class.has-error]="isFieldInvalid('email')">
+              <span class="cg-input-icon cg-icon-email" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </span>
+              <div class="cg-input-content">
+                <label for="register-email" class="cg-field-label">Email address</label>
+                <input
+                  id="register-email"
+                  type="email"
+                  formControlName="email"
+                  placeholder="Enter your email address"
+                  class="cg-input"
+                  [class.is-invalid]="isFieldInvalid('email')"
+                  autocomplete="email"
+                  aria-required="true"
+                  [attr.aria-invalid]="isFieldInvalid('email')"
+                  [attr.aria-describedby]="isFieldInvalid('email') ? 'email-error' : null"
+                />
+              </div>
+            </div>
+            @if (isFieldInvalid('email')) {
+              <div id="email-error" class="cg-error-msg" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ getFieldError('email') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Password Field -->
+          <div class="cg-field-group">
+            <div class="cg-input-box" [class.has-error]="isFieldInvalid('password')">
+              <span class="cg-input-icon cg-icon-lock" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </span>
+              <div class="cg-input-content">
+                <label for="register-password" class="cg-field-label">Password</label>
+                <input
+                  id="register-password"
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Create a password"
+                  class="cg-input"
+                  [class.is-invalid]="isFieldInvalid('password')"
+                  autocomplete="new-password"
+                  aria-required="true"
+                  [attr.aria-invalid]="isFieldInvalid('password')"
+                  [attr.aria-describedby]="isFieldInvalid('password') ? 'password-error' : null"
+                />
+              </div>
+              <button
+                type="button"
+                class="cg-toggle-password-btn"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                [attr.aria-pressed]="showPassword()"
+              >
+                @if (showPassword()) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                    <line x1="2" y1="2" x2="22" y2="22" />
+                  </svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                }
+              </button>
+            </div>
+            @if (isFieldInvalid('password')) {
+              <div id="password-error" class="cg-error-msg" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ getFieldError('password') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="cg-field-group">
+            <div class="cg-input-box" [class.has-error]="isFieldInvalid('confirmPassword')">
+              <span class="cg-input-icon cg-icon-lock" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </span>
+              <div class="cg-input-content">
+                <label for="register-confirmpassword" class="cg-field-label">Confirm password</label>
+                <input
+                  id="register-confirmpassword"
+                  [type]="showConfirmPassword() ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm your password"
+                  class="cg-input"
+                  [class.is-invalid]="isFieldInvalid('confirmPassword')"
+                  autocomplete="new-password"
+                  aria-required="true"
+                  [attr.aria-invalid]="isFieldInvalid('confirmPassword')"
+                  [attr.aria-describedby]="isFieldInvalid('confirmPassword') ? 'confirmpassword-error' : null"
+                />
+              </div>
+              <button
+                type="button"
+                class="cg-toggle-password-btn"
+                (click)="toggleConfirmPasswordVisibility()"
+                [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'"
+                [attr.aria-pressed]="showConfirmPassword()"
+              >
+                @if (showConfirmPassword()) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                    <line x1="2" y1="2" x2="22" y2="22" />
+                  </svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                }
+              </button>
+            </div>
+            @if (isFieldInvalid('confirmPassword')) {
+              <div id="confirmpassword-error" class="cg-error-msg" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ getFieldError('confirmPassword') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Terms and Privacy Checkbox -->
+          <div class="cg-terms-row">
+            <label class="cg-checkbox-container" for="register-terms">
+              <input
+                type="checkbox"
+                id="register-terms"
+                formControlName="agreeTerms"
+                class="cg-checkbox-input"
+                aria-required="true"
+              />
+              <span class="cg-custom-checkbox" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span class="cg-checkbox-label">
+                I agree to the
+                <button type="button" class="cg-text-link" (click)="showTermsNotice('terms')">Terms of Service</button>
+                and
+                <button type="button" class="cg-text-link" (click)="showTermsNotice('privacy')">Privacy Policy</button>.
+              </span>
+            </label>
+            @if (isFieldInvalid('agreeTerms')) {
+              <div id="terms-error" class="cg-error-msg" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ getFieldError('agreeTerms') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Primary Orange Create Account Button -->
+          <button
+            type="submit"
+            class="cg-btn-create"
+            [disabled]="isSubmitting()"
+            id="register-submit-btn"
+          >
+            @if (isSubmitting()) {
+              <span class="cg-btn-spinner" aria-hidden="true"></span>
+              <span>Creating account...</span>
+            } @else {
+              <span class="cg-btn-text">Create Account &nbsp;→</span>
+            }
+          </button>
+
+          <!-- OR Divider -->
+          <div class="cg-divider" role="separator" aria-label="Or continue with other options">
+            <span class="cg-divider-text">OR</span>
+          </div>
+
+          <!-- Google Sign-in Button -->
+          <button
+            type="button"
+            class="cg-btn-google"
+            (click)="onGoogleSignUp()"
+            id="register-google-btn"
+          >
+            <svg class="cg-google-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                fill="#EA4335"
+              />
+            </svg>
+            <span class="cg-google-text">Continue with Google</span>
+          </button>
+
+        </form>
+
+        <!-- Log In Link Footer -->
+        <div class="cg-login-prompt">
+          <span class="cg-login-text">Already have an account?</span>
+          <a routerLink="/auth/login" class="cg-login-link" id="register-to-login-link">
+            Log In &nbsp;→
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT SECTION: 3 Stacked Photographic Travel Cards (~52%) -->
+    <aside class="cg-register-right-section" aria-label="CeylonGo Travel Experiences">
+      
+      <!-- Card 1: Local Homestays -->
+      <article class="cg-travel-card cg-card-homestays">
+        <img
+          src="assets/images/auth/login-local-homestay.jpg"
+          alt="Traditional Sri Lankan village homestay with warm veranda, hanging lanterns, and tropical garden"
+          class="cg-card-image"
+          loading="eager"
+        />
+        <div class="cg-card-gradient" aria-hidden="true"></div>
+        <div class="cg-card-content">
+          <div class="cg-card-badge cg-badge-orange" aria-hidden="true">
+            <!-- House Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <div class="cg-card-text">
+            <h2 class="cg-card-title">Local Homestays</h2>
+            <p class="cg-card-desc">Stay with local families and feel at home.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Local Cultures -->
+      <article class="cg-travel-card cg-card-cultures">
+        <img
+          src="assets/images/auth/login-tamil-culture.jpg"
+          alt="Authentic Northern Sri Lankan Tamil cultural temple festival with ornate Gopuram, chariot, and drummers"
+          class="cg-card-image"
+          loading="eager"
+        />
+        <div class="cg-card-gradient" aria-hidden="true"></div>
+        <div class="cg-card-content">
+          <div class="cg-card-badge cg-badge-red" aria-hidden="true">
+            <!-- Temple / Shrine Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L8 6h8l-4-4z" />
+              <path d="M6 6h12v3H6z" />
+              <path d="M4 9h16v4H4z" />
+              <path d="M3 13h18v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-8z" />
+              <path d="M9 22v-5a3 3 0 0 1 6 0v5" />
+            </svg>
+          </div>
+          <div class="cg-card-text">
+            <h2 class="cg-card-title">Local Cultures</h2>
+            <p class="cg-card-desc">Experience authentic Tamil, Sinhala and Muslim traditions across Sri Lanka.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Nature Experiences -->
+      <article class="cg-travel-card cg-card-nature">
+        <img
+          src="assets/images/auth/login-northern-nature.jpg"
+          alt="Scenic aerial view of Northern Sri Lanka coastal lagoon causeway and railway train over turquoise waters"
+          class="cg-card-image"
+          loading="eager"
+        />
+        <div class="cg-card-gradient" aria-hidden="true"></div>
+        <div class="cg-card-content">
+          <div class="cg-card-badge cg-badge-green" aria-hidden="true">
+            <!-- Leaf / Eco Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+            </svg>
+          </div>
+          <div class="cg-card-text">
+            <h2 class="cg-card-title">Nature Experiences</h2>
+            <p class="cg-card-desc">Explore nature, wildlife and eco-tourism.</p>
+          </div>
+        </div>
+      </article>
+
+    </aside>
+
+  </div>
+</div>

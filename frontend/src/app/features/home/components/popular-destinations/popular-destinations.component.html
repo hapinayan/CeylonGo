@@ -1,0 +1,46 @@
+<section class="cg-destinations-section" aria-label="Popular Sri Lankan Destinations">
+  <div class="cg-container">
+    <!-- Section Header (Matching Approved Reference) -->
+    <div class="cg-dest-header">
+      <div class="cg-dest-header-left">
+        <span class="cg-dest-kicker">EXPLORE SRI LANKA</span>
+        <h2 class="cg-dest-title">Popular Destinations</h2>
+      </div>
+      <a routerLink="/destinations" class="cg-dest-view-all">
+        <span>View All Destinations</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- 6-Card Responsive Grid -->
+    <div class="cg-dest-grid">
+      @for (dest of destinations; track dest.id) {
+        <a [routerLink]="['/destinations', dest.id]" class="cg-dest-card" [attr.aria-label]="'Explore ' + dest.name">
+          <img
+            [src]="dest.imageUrl"
+            [alt]="dest.name + ' — ' + (dest.category || dest.province)"
+            class="cg-dest-img"
+            loading="lazy"
+          />
+          <div class="cg-dest-gradient" aria-hidden="true"></div>
+
+          <div class="cg-dest-info">
+            <div class="cg-dest-meta">
+              <h3 class="cg-dest-name">{{ dest.name }}</h3>
+              <p class="cg-dest-category">{{ dest.category || dest.province }}</p>
+            </div>
+            <div class="cg-dest-arrow-btn" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,312 @@
+<div class="cg-design-system-page">
+  <app-page-container size="lg">
+    <!-- Breadcrumbs Component Demo -->
+    <app-breadcrumbs [items]="breadcrumbItems" [showHome]="true"></app-breadcrumbs>
+
+    <!-- Page Header Component Demo -->
+    <app-page-header
+      title="CeylonGo Design System & UI Foundation"
+      kicker="ENGINEERING & DESIGN SPECIFICATION"
+      subtitle="Standardized reusable component library, global CSS tokens, typography scales, and responsive guidelines for the CeylonGo frontend engineering team."
+    >
+      <div actions>
+        <app-button variant="primary" size="sm" (btnClick)="openConfirmDialog('primary')">
+          Quick Action
+        </app-button>
+        <app-button variant="cta" size="sm" (btnClick)="openConfirmDialog('warning')">
+          Test Dialog
+        </app-button>
+      </div>
+    </app-page-header>
+
+    <!-- SECTION 1: GLOBAL DESIGN TOKENS (COLORS) -->
+    <section class="cg-ds-section" id="tokens-colors">
+      <app-section-header
+        kicker="FOUNDATION"
+        title="Approved Brand "
+        highlightText="Color Tokens"
+        subtitle="Every module must reference these CSS custom properties. Never hardcode arbitrary hex codes."
+        align="left"
+      ></app-section-header>
+
+      <div class="cg-swatches-grid">
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #082b5c;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Primary Navy</span>
+            <code class="cg-swatch-var">--cg-primary</code>
+            <span class="cg-swatch-hex">#082B5C</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #ff9f1c;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Accent Orange</span>
+            <code class="cg-swatch-var">--cg-accent</code>
+            <span class="cg-swatch-hex">#FF9F1C</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #ffffff; border-bottom: 1px solid #e2e8f0;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Background White</span>
+            <code class="cg-swatch-var">--cg-background</code>
+            <span class="cg-swatch-hex">#FFFFFF</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Light Background</span>
+            <code class="cg-swatch-var">--cg-bg-light</code>
+            <span class="cg-swatch-hex">#F8FAFC</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #0f172a;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Primary Text</span>
+            <code class="cg-swatch-var">--cg-text-primary</code>
+            <span class="cg-swatch-hex">#0F172A</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #475569;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Secondary Text</span>
+            <code class="cg-swatch-var">--cg-text-secondary</code>
+            <span class="cg-swatch-hex">#475569</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #94a3b8;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Muted Text</span>
+            <code class="cg-swatch-var">--cg-text-muted</code>
+            <span class="cg-swatch-hex">#94A3B8</span>
+          </div>
+        </div>
+
+        <div class="cg-swatch-card">
+          <div class="cg-swatch-color" style="background-color: #e2e8f0;"></div>
+          <div class="cg-swatch-meta">
+            <span class="cg-swatch-name">Border Slate</span>
+            <code class="cg-swatch-var">--cg-border</code>
+            <span class="cg-swatch-hex">#E2E8F0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: BUTTONS -->
+    <section class="cg-ds-section" id="tokens-buttons">
+      <app-section-header
+        kicker="SHARED COMPONENT"
+        title="Button Component "
+        highlightText="(app-button)"
+        subtitle="Standardized button hierarchy: Navy primary, Orange main CTA, Secondary outline, Ghost, and Danger."
+        align="left"
+      ></app-section-header>
+
+      <div class="cg-ds-card">
+        <h4 class="cg-ds-card-title">Button Variants</h4>
+        <div class="cg-buttons-row">
+          <app-button variant="primary">Primary Navy</app-button>
+          <app-button variant="cta">Main CTA (Orange)</app-button>
+          <app-button variant="secondary">Secondary</app-button>
+          <app-button variant="outline">Outline</app-button>
+          <app-button variant="ghost">Ghost</app-button>
+          <app-button variant="danger">Danger</app-button>
+        </div>
+
+        <h4 class="cg-ds-card-title" style="margin-top: 1.5rem;">Button Sizes & States</h4>
+        <div class="cg-buttons-row">
+          <app-button variant="primary" size="sm">Small (34px)</app-button>
+          <app-button variant="primary" size="md">Medium (42px)</app-button>
+          <app-button variant="primary" size="lg">Large (50px)</app-button>
+          <app-button variant="cta" [loading]="true">Loading State</app-button>
+          <app-button variant="primary" [disabled]="true">Disabled</app-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: FORM INPUTS, SELECT & SEARCH -->
+    <section class="cg-ds-section" id="tokens-inputs">
+      <app-section-header
+        kicker="SHARED FORM CONTROLS"
+        title="Inputs, Search & "
+        highlightText="Dropdown Select"
+        subtitle="8px input radius, accessible focus rings, floating clear controls, and error states."
+        align="left"
+      ></app-section-header>
+
+      <div class="cg-form-grid">
+        <!-- Form Input -->
+        <div class="cg-ds-card">
+          <h4 class="cg-ds-card-title">Form Input (app-form-input)</h4>
+          <div class="cg-stack">
+            <app-form-input
+              label="Traveler Full Name"
+              placeholder="e.g. Hapinayan S."
+              [required]="true"
+              hintMessage="Enter name as it appears on your passport or national ID."
+            ></app-form-input>
+
+            <app-form-input
+              label="Email Address"
+              placeholder="you@ceylongo.lk"
+              [required]="true"
+              [errorMessage]="sampleInputError()"
+            ></app-form-input>
+
+            <app-form-input
+              label="Account Password"
+              type="password"
+              placeholder="Enter secure password"
+              [required]="true"
+            ></app-form-input>
+          </div>
+        </div>
+
+        <!-- Select & Search -->
+        <div class="cg-ds-card">
+          <h4 class="cg-ds-card-title">Select Dropdown & Search Input</h4>
+          <div class="cg-stack">
+            <app-select
+              label="Select Sri Lankan Destination"
+              [options]="districtOptions"
+              [value]="selectedDistrict()"
+              (valueChange)="selectedDistrict.set($event)"
+              [required]="true"
+            ></app-select>
+
+            <div style="margin-top: 0.5rem;">
+              <label class="cg-text-label" style="display:block; margin-bottom: 0.5rem;">Search Bar (app-search-input)</label>
+              <app-search-input
+                placeholder="Search homestays in Kandy, Ella, Galle..."
+                (search)="lastSearchQuery.set($event)"
+              ></app-search-input>
+              @if (lastSearchQuery()) {
+                <p class="cg-text-caption" style="margin-top: 0.5rem;">
+                  Searching for: <strong>{{ lastSearchQuery() }}</strong>
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: FILTER PANEL & LISTING CARDS -->
+    <section class="cg-ds-section" id="tokens-listings">
+      <app-section-header
+        kicker="CORE TOURISM PATTERNS"
+        title="Filter Panel & "
+        highlightText="Reusable Listing Cards"
+        subtitle="12px card border-radius, LKR pricing, responsive layout grid, and wishlist favorite toggles."
+        align="left"
+      ></app-section-header>
+
+      <div class="cg-listing-showcase-layout">
+        <!-- Sidebar Filter Panel -->
+        <div class="cg-filter-col">
+          <app-filter-panel (filterChange)="onFilterChange($event)"></app-filter-panel>
+        </div>
+
+        <!-- 3 Sample Listing Cards -->
+        <div class="cg-cards-col">
+          <div class="cg-cards-grid">
+            @for (item of sampleListings; track item.id) {
+              <app-listing-card
+                [item]="item"
+                ctaLabel="Book Now"
+              ></app-listing-card>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FEEDBACK & STATE PATTERNS -->
+    <section class="cg-ds-section" id="tokens-states">
+      <app-section-header
+        kicker="ASYNC & FEEDBACK STATES"
+        title="Loading, Empty & "
+        highlightText="Error States"
+        subtitle="Polished empty states, connection error handlers, and shimmer skeleton placeholders."
+        align="left"
+      ></app-section-header>
+
+      <div class="cg-states-grid">
+        <!-- Loading State Demo -->
+        <div class="cg-ds-card">
+          <div class="cg-ds-card-header">
+            <h4 class="cg-ds-card-title">Loading State (app-loading-state)</h4>
+            <div class="cg-mode-toggles">
+              <button
+                type="button"
+                class="cg-chip"
+                [class.cg-chip--active]="loadingMode() === 'spinner'"
+                (click)="loadingMode.set('spinner')"
+              >
+                Spinner
+              </button>
+              <button
+                type="button"
+                class="cg-chip"
+                [class.cg-chip--active]="loadingMode() === 'skeleton'"
+                (click)="loadingMode.set('skeleton')"
+              >
+                Shimmer Skeleton
+              </button>
+            </div>
+          </div>
+
+          <app-loading-state
+            [mode]="loadingMode()"
+            message="Discovering authentic homestays in Sri Lanka..."
+            [skeletonCount]="2"
+          ></app-loading-state>
+        </div>
+
+        <!-- Empty State Demo -->
+        <div class="cg-ds-card">
+          <h4 class="cg-ds-card-title">Empty State (app-empty-state)</h4>
+          <app-empty-state
+            title="No Homestays Available"
+            description="We could not find any active homestays matching your selected dates. Try exploring nearby districts."
+            actionText="Clear All Filters"
+          ></app-empty-state>
+        </div>
+
+        <!-- Error State Demo -->
+        <div class="cg-ds-card">
+          <h4 class="cg-ds-card-title">Error State (app-error-state)</h4>
+          <app-error-state
+            title="Unable to Reach CeylonGo Services"
+            message="We could not retrieve real-time homestay availability. Please verify your network connection."
+            retryText="Retry Connection"
+          ></app-error-state>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confirmation Dialog Modal Component Demo -->
+    <app-confirmation-dialog
+      [isOpen]="isDialogOpen()"
+      [variant]="dialogVariant()"
+      title="Cancel Homestay Booking?"
+      message="Are you sure you want to cancel this booking? Cancellation policies for local hosts will apply."
+      confirmText="Yes, Cancel Booking"
+      cancelText="Keep Booking"
+      (confirm)="handleDialogConfirm()"
+      (close)="isDialogOpen.set(false)"
+    ></app-confirmation-dialog>
+  </app-page-container>
+</div>

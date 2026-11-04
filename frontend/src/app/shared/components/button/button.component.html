@@ -1,0 +1,21 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-busy]="loading()"
+  class="cg-btn cg-btn--{{ variant() }} cg-btn--{{ size() }}"
+  [class.cg-btn--full]="fullWidth()"
+  [class.cg-btn--loading]="loading()"
+  (click)="handleClick($event)"
+>
+  @if (loading()) {
+    <span class="cg-btn__spinner" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="32" stroke-linecap="round" />
+      </svg>
+    </span>
+  }
+  <span class="cg-btn__content" [class.cg-btn__content--hidden]="loading()">
+    <ng-content></ng-content>
+  </span>
+</button>
