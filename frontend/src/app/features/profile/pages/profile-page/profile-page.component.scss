@@ -1,0 +1,370 @@
+// =============================================================================
+// CeylonGo — Module 07: Profile Page Shell Stylesheet
+// Architecture: SCSS Design Tokens + Responsive Mixins
+// =============================================================================
+
+@use 'styles/tokens' as tokens;
+@use 'styles/mixins' as mixins;
+
+:host {
+  display: block;
+  padding-bottom: var(--cg-space-16, 4rem);
+}
+
+// --- Header Actions & Status Badges ---
+.cg-profile-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cg-space-3, 0.75rem);
+}
+
+.cg-profile-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cg-space-2, 0.5rem);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cg-primary, #082b5c);
+  background-color: var(--cg-primary-subtle, #f0f4f9);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: var(--cg-radius-pill, 9999px);
+}
+
+.cg-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cg-accent, #ff9f1c);
+  box-shadow: 0 0 0 2px rgba(255, 159, 28, 0.2);
+}
+
+// --- Demo Architecture Notice Banner ---
+.cg-demo-notice-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cg-space-3, 0.75rem);
+  padding: 1rem 1.25rem;
+  margin-bottom: var(--cg-space-6, 1.5rem);
+  background-color: #f0f7ff;
+  border: 1px solid #bae0fd;
+  border-left: 4px solid var(--cg-primary, #082b5c);
+  border-radius: var(--cg-radius-input, 8px);
+}
+
+.cg-demo-notice-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.cg-demo-notice-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cg-demo-notice-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--cg-primary, #082b5c);
+}
+
+.cg-demo-notice-text {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cg-text-secondary, #475569);
+  margin: 0;
+}
+
+// --- Responsive Tab Navigation Bar (Desktop / Tablet / Mobile) ---
+.cg-profile-tabs-wrapper {
+  position: relative;
+  margin-bottom: var(--cg-space-6, 1.5rem);
+  border-bottom: 2px solid var(--cg-border, #e2e8f0);
+  background-color: var(--cg-surface, #ffffff);
+  border-radius: var(--cg-radius-input, 8px) var(--cg-radius-input, 8px) 0 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 var(--cg-space-2, 0.5rem);
+
+  // Custom subtle scrollbar indicator for tablet/mobile
+  scrollbar-width: thin;
+  scrollbar-color: var(--cg-border, #e2e8f0) transparent;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--cg-border, #e2e8f0);
+    border-radius: 4px;
+  }
+
+  @include mixins.respond-to('md') {
+    padding: 0;
+    overflow-x: visible;
+  }
+}
+
+.cg-profile-tabs {
+  display: flex;
+  gap: var(--cg-space-2, 0.5rem);
+  min-width: max-content;
+
+  @include mixins.respond-to('md') {
+    min-width: 100%;
+  }
+}
+
+.cg-profile-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cg-space-2, 0.5rem);
+  min-height: 48px; // Accessible touch target size
+  padding: 0.75rem 1.125rem;
+  font-family: var(--cg-font-family);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--cg-text-secondary, #475569);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--cg-transition-fast, 150ms ease);
+
+  @include mixins.focus-ring;
+
+  @include mixins.respond-to('md') {
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+  }
+
+  &:hover {
+    color: var(--cg-primary, #082b5c);
+    background-color: var(--cg-primary-subtle, #f0f4f9);
+    border-radius: 8px 8px 0 0;
+  }
+
+  &--active {
+    color: var(--cg-primary, #082b5c);
+    border-bottom-color: var(--cg-accent, #ff9f1c);
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.cg-tab-icon {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.cg-tab-label {
+  font-weight: 600;
+}
+
+.cg-tab-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.125rem 0.375rem;
+  background-color: #fef3c7;
+  color: #92400e;
+  border-radius: var(--cg-radius-pill, 9999px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+// --- Active Tab Panel Cards ---
+.cg-tab-panel {
+  display: block;
+}
+
+.cg-panel-card {
+  background-color: var(--cg-surface, #ffffff);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: var(--cg-radius-card, 12px);
+  padding: var(--cg-space-6, 1.5rem);
+  box-shadow: var(--cg-shadow-card);
+
+  @include mixins.respond-to('md') {
+    padding: var(--cg-space-8, 2rem);
+  }
+}
+
+.cg-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: var(--cg-space-4, 1rem);
+  margin-bottom: var(--cg-space-6, 1.5rem);
+  border-bottom: 1px solid var(--cg-border, #e2e8f0);
+  gap: var(--cg-space-3, 0.75rem);
+}
+
+.cg-panel-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cg-primary, #082b5c);
+  margin-bottom: 0.25rem;
+}
+
+.cg-panel-subtitle {
+  font-size: 0.875rem;
+  color: var(--cg-text-secondary, #475569);
+  margin: 0;
+}
+
+.cg-panel-phase-badge {
+  flex-shrink: 0;
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cg-primary, #082b5c);
+  background-color: var(--cg-primary-subtle, #f0f4f9);
+  border-radius: var(--cg-radius-pill, 9999px);
+
+  &--warning {
+    color: #b45309;
+    background-color: #fef3c7;
+  }
+}
+
+// --- Preview Fields Grid ---
+.cg-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--cg-space-5, 1.25rem);
+
+  @include mixins.respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cg-preview-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &--full {
+    @include mixins.respond-to('md') {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.cg-preview-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cg-text-secondary, #475569);
+}
+
+.cg-preview-value {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--cg-text-primary, #0f172a);
+  background-color: var(--cg-bg-light, #f8fafc);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: var(--cg-radius-input, 8px);
+  padding: 0.625rem 0.875rem;
+}
+
+.cg-preview-text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--cg-text-primary, #0f172a);
+  background-color: var(--cg-bg-light, #f8fafc);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: var(--cg-radius-input, 8px);
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+
+.cg-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cg-space-2, 0.5rem);
+}
+
+.cg-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--cg-primary, #082b5c);
+  background-color: var(--cg-primary-subtle, #f0f4f9);
+  border-radius: var(--cg-radius-input, 8px);
+
+  &--accent {
+    color: #9a3412;
+    background-color: #ffedd5;
+  }
+}
+
+// --- Sessions List Simulation ---
+.cg-sessions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cg-space-3, 0.75rem);
+}
+
+.cg-session-item {
+  display: flex;
+  align-items: center;
+  gap: var(--cg-space-3, 0.75rem);
+  padding: 0.75rem 1rem;
+  background-color: var(--cg-bg-light, #f8fafc);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: var(--cg-radius-input, 8px);
+}
+
+.cg-session-icon {
+  font-size: 1.25rem;
+}
+
+.cg-session-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  strong {
+    font-size: 0.875rem;
+    color: var(--cg-text-primary, #0f172a);
+  }
+
+  span {
+    font-size: 0.75rem;
+    color: var(--cg-text-secondary, #475569);
+  }
+}
+
+.cg-session-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #065f46;
+  background-color: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--cg-radius-pill, 9999px);
+}
+
+.cg-panel-footer-note {
+  margin-top: var(--cg-space-6, 1.5rem);
+  padding-top: var(--cg-space-4, 1rem);
+  border-top: 1px dashed var(--cg-border, #e2e8f0);
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--cg-text-muted, #94a3b8);
+  text-align: right;
+}

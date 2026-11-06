@@ -1,0 +1,118 @@
+<section class="cg-profile-hero-card" aria-label="Traveler Profile Summary">
+  <!-- Avatar & Photo Actions -->
+  <div class="cg-profile-avatar-column">
+    <div class="cg-profile-avatar-wrapper">
+      <div class="cg-profile-avatar" [class.cg-profile-avatar--has-image]="!!activeObjectUrl()">
+        @if (activeObjectUrl()) {
+          <img
+            [src]="activeObjectUrl()"
+            alt="Profile photo preview for {{ userFullName() }}"
+            class="cg-profile-avatar-img"
+          />
+        } @else {
+          <span class="cg-profile-initials" aria-hidden="true">{{ userInitials() }}</span>
+        }
+      </div>
+
+      <!-- Hidden Accessible File Input -->
+      <input
+        #fileInput
+        type="file"
+        id="cg-avatar-file-input"
+        class="cg-sr-only"
+        accept="image/jpeg,image/png,image/webp"
+        (change)="onFileSelected($event)"
+        aria-label="Upload profile photo in JPG, PNG, or WebP format (max 2 MB)"
+      />
+    </div>
+
+    <!-- Avatar Control Buttons -->
+    <div class="cg-avatar-actions">
+      <app-button
+        variant="secondary"
+        size="sm"
+        (btnClick)="fileInput.click()"
+        ariaLabel="Select new profile photo"
+      >
+        📷 {{ activeObjectUrl() ? 'Change Photo' : 'Upload Photo' }}
+      </app-button>
+
+      @if (activeObjectUrl()) {
+        <app-button
+          variant="ghost"
+          size="sm"
+          (btnClick)="removeAvatar()"
+          ariaLabel="Remove selected photo and restore default initials"
+        >
+          ✕ Restore Initials
+        </app-button>
+      }
+    </div>
+
+    <span class="cg-avatar-hint">JPG, PNG, WebP • Max 2 MB</span>
+  </div>
+
+  <!-- Profile Metadata Content -->
+  <div class="cg-profile-summary-content">
+    <div class="cg-profile-summary-header">
+      <div class="cg-profile-title-row">
+        <h2 class="cg-profile-name">{{ userFullName() }}</h2>
+        <span class="cg-badge cg-badge--demo" title="Simulated verification status">
+          {{ profile().personal.verificationLabel }}
+        </span>
+      </div>
+      <span class="cg-profile-role-kicker">CEYLONGO COMMUNITY TRAVELER</span>
+    </div>
+
+    <!-- Metadata Grid -->
+    <div class="cg-profile-meta-grid">
+      <div class="cg-profile-meta-item">
+        <span class="cg-profile-meta-label">Email Address</span>
+        <span class="cg-profile-meta-val">{{ profile().personal.email }}</span>
+      </div>
+      <div class="cg-profile-meta-item">
+        <span class="cg-profile-meta-label">Home District</span>
+        <span class="cg-profile-meta-val">{{ userDistrictLabel() }}</span>
+      </div>
+      <div class="cg-profile-meta-item">
+        <span class="cg-profile-meta-label">Member Since</span>
+        <span class="cg-profile-meta-val">{{ profile().personal.memberSince }}</span>
+      </div>
+      <div class="cg-profile-meta-item">
+        <span class="cg-profile-meta-label">Contact Phone</span>
+        <span class="cg-profile-meta-val">{{ profile().personal.phone }}</span>
+      </div>
+    </div>
+
+    <!-- Dynamic Feedback Notifications -->
+    @if (uploadError()) {
+      <div class="cg-avatar-feedback cg-avatar-feedback--error" role="alert">
+        <span class="cg-feedback-icon" aria-hidden="true">⚠️</span>
+        <span class="cg-feedback-text">{{ uploadError() }}</span>
+        <button
+          type="button"
+          class="cg-feedback-dismiss"
+          (click)="dismissFeedback()"
+          aria-label="Dismiss error notice"
+        >
+          ✕
+        </button>
+      </div>
+    }
+
+    @if (uploadSuccess()) {
+      <div class="cg-avatar-feedback cg-avatar-feedback--success" role="status">
+        <span class="cg-feedback-icon" aria-hidden="true">✓</span>
+        <span class="cg-feedback-text">{{ uploadSuccess() }}</span>
+        <button
+          type="button"
+          class="cg-feedback-dismiss"
+          (click)="dismissFeedback()"
+          aria-label="Dismiss confirmation notice"
+        >
+          ✕
+        </button>
+      </div>
+    }
+  </div>
+</section>

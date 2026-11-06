@@ -1,0 +1,171 @@
+<div class="cg-panel-card" role="region" aria-label="Emergency and Travel Settings">
+  <!-- Card Header -->
+  <div class="cg-panel-header">
+    <div>
+      <h3 class="cg-panel-title">Traveler & Emergency Contact Details</h3>
+      <p class="cg-panel-subtitle">
+        Assistance contacts, dietary preferences, and mobility notes for community homestay hosts.
+      </p>
+    </div>
+    <span class="cg-panel-badge">In-Memory Demo</span>
+  </div>
+
+  <!-- Privacy & Demo Disclaimer Banner -->
+  <div class="cg-privacy-banner" role="status" aria-live="polite">
+    <div class="cg-privacy-banner-icon" aria-hidden="true">🛟</div>
+    <div class="cg-privacy-banner-text">
+      <strong>Privacy & In-Memory Guarantee:</strong>
+      <p>
+        Emergency contact numbers and host assistance notes are held strictly in memory for this browser session.
+        In strict compliance with our privacy architecture, no sensitive medical or personal data is stored in localStorage or sessionStorage.
+        Please use fictional demonstration details only.
+      </p>
+    </div>
+  </div>
+
+  <!-- Dynamic Notification Alerts -->
+  @if (successNotice()) {
+    <div class="cg-alert cg-alert--success" role="status" aria-live="polite">
+      <span class="cg-alert-icon" aria-hidden="true">✓</span>
+      <span class="cg-alert-text">{{ successNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss confirmation notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  @if (errorNotice()) {
+    <div class="cg-alert cg-alert--error" role="alert">
+      <span class="cg-alert-icon" aria-hidden="true">⚠️</span>
+      <span class="cg-alert-text">{{ errorNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss error notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  <!-- Form -->
+  <form [formGroup]="emergencyForm" (ngSubmit)="onSubmit()" class="cg-emergency-form" novalidate>
+    <!-- Section 1: Emergency Contact -->
+    <div class="cg-section-group">
+      <h4 class="cg-group-title">Primary Emergency Contact</h4>
+      <p class="cg-group-desc">A trusted local or international contact for unexpected travel situations.</p>
+
+      <div class="cg-form-grid">
+        <app-form-input
+          formControlName="contactName"
+          label="Contact Full Name"
+          placeholder="e.g. Nimal Silva (Fictional)"
+          [required]="true"
+          [errorMessage]="getFieldError('contactName')"
+        ></app-form-input>
+
+        <div class="cg-field-wrapper">
+          <app-select
+            label="Relationship to Traveler"
+            [options]="relationshipOptions"
+            [value]="emergencyForm.get('relationship')?.value"
+            (valueChange)="onRelationshipChange($event)"
+            [required]="true"
+            placeholder="Select relationship..."
+            [errorMessage]="getFieldError('relationship')"
+          ></app-select>
+        </div>
+
+        <div class="cg-field-wrapper cg-field-wrapper--full">
+          <app-form-input
+            formControlName="phone"
+            label="Emergency Contact Phone"
+            type="tel"
+            placeholder="+94 71 987 6543"
+            [required]="true"
+            hintMessage="Supports Sri Lankan mobile (+94 7X / 07X) or international numbers (+1...)."
+            [errorMessage]="getFieldError('phone')"
+          ></app-form-input>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Dietary Preferences -->
+    <div class="cg-section-group">
+      <h4 class="cg-group-title">Dietary Preferences for Homestay Hosts</h4>
+      <p class="cg-group-desc">
+        Family homestay hosts prepare authentic home-cooked Sri Lankan meals. Select your dietary preferences so hosts can accommodate your requirements.
+      </p>
+
+      <div class="cg-diets-picker" role="group" aria-label="Dietary Preferences">
+        @for (diet of dietaryOptions; track diet) {
+          <button
+            type="button"
+            class="cg-diet-chip"
+            [class.cg-diet-chip--selected]="selectedDiets().includes(diet)"
+            (click)="toggleDiet(diet)"
+            [attr.aria-pressed]="selectedDiets().includes(diet)"
+          >
+            <span class="cg-diet-check" aria-hidden="true">
+              {{ selectedDiets().includes(diet) ? '✓' : '+' }}
+            </span>
+            <span>{{ diet }}</span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Section 3: Homestay Accessibility Notes -->
+    <div class="cg-section-group">
+      <h4 class="cg-group-title">Homestay Host Assistance & Accessibility Notes</h4>
+      <p class="cg-group-desc">
+        Add general non-sensitive accommodation preferences (e.g., ground-floor room requirement, sensitivity to pets, steep stairs alert).
+      </p>
+
+      <div class="cg-field-wrapper">
+        <textarea
+          formControlName="accessibilityNotes"
+          rows="3"
+          maxlength="300"
+          class="cg-textarea"
+          placeholder="e.g. Prefers ground-floor room if possible; allergic to cat fur (fictional note)..."
+          [class.has-error]="isFieldInvalid('accessibilityNotes')"
+        ></textarea>
+        @if (getFieldError('accessibilityNotes')) {
+          <span class="cg-error-message" role="alert">{{ getFieldError('accessibilityNotes') }}</span>
+        } @else {
+          <span class="cg-field-hint">Max 300 characters. Shared with homestay hosts upon confirmed booking.</span>
+        }
+      </div>
+    </div>
+
+    <!-- Form Actions Footer -->
+    <div class="cg-form-actions">
+      <app-button
+        variant="secondary"
+        type="button"
+        size="md"
+        (btnClick)="onCancel()"
+        [disabled]="isSaving()"
+      >
+        Cancel Changes
+      </app-button>
+
+      <app-button
+        variant="primary"
+        type="submit"
+        size="md"
+        [loading]="isSaving()"
+        [disabled]="emergencyForm.pristine && !isSaving()"
+      >
+        Save Emergency Details
+      </app-button>
+    </div>
+  </form>
+</div>
