@@ -1,0 +1,177 @@
+<div class="cg-panel-card" role="region" aria-label="Personal Information Settings">
+  <!-- Card Header -->
+  <div class="cg-panel-header">
+    <div>
+      <h3 class="cg-panel-title">Personal Information</h3>
+      <p class="cg-panel-subtitle">
+        Update your full name, contact phone, administrative home district, and traveler bio.
+      </p>
+    </div>
+    <span class="cg-panel-badge">In-Memory Demo</span>
+  </div>
+
+  <!-- Dynamic Notification Alerts -->
+  @if (successNotice()) {
+    <div class="cg-alert cg-alert--success" role="status" aria-live="polite">
+      <span class="cg-alert-icon" aria-hidden="true">✓</span>
+      <span class="cg-alert-text">{{ successNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss success notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  @if (errorNotice()) {
+    <div class="cg-alert cg-alert--error" role="alert">
+      <span class="cg-alert-icon" aria-hidden="true">⚠️</span>
+      <span class="cg-alert-text">{{ errorNotice() }}</span>
+      <button
+        type="button"
+        class="cg-alert-dismiss"
+        (click)="dismissNotice()"
+        aria-label="Dismiss error notice"
+      >
+        ✕
+      </button>
+    </div>
+  }
+
+  <!-- Reactive Form -->
+  <form [formGroup]="personalForm" (ngSubmit)="onSubmit()" class="cg-personal-form" novalidate>
+    <div class="cg-form-grid">
+      <!-- First Name -->
+      <app-form-input
+        formControlName="firstName"
+        label="First Name"
+        placeholder="e.g. Hapinayan"
+        [required]="true"
+        [errorMessage]="getFieldError('firstName')"
+      ></app-form-input>
+
+      <!-- Last Name -->
+      <app-form-input
+        formControlName="lastName"
+        label="Last Name"
+        placeholder="e.g. S."
+        [required]="true"
+        [errorMessage]="getFieldError('lastName')"
+      ></app-form-input>
+
+      <!-- Email Address (Read-only) -->
+      <app-form-input
+        formControlName="email"
+        label="Email Address"
+        type="email"
+        [disabled]="true"
+        hintMessage="Account email is verified and cannot be changed without re-authentication."
+      ></app-form-input>
+
+      <!-- Mobile Phone -->
+      <app-form-input
+        formControlName="phone"
+        label="Mobile Phone Number"
+        type="tel"
+        placeholder="+94 77 123 4567"
+        [required]="true"
+        hintMessage="Supports Sri Lankan mobile (+94 7X / 07X) or international numbers (+1...)."
+        [errorMessage]="getFieldError('phone')"
+      ></app-form-input>
+
+      <!-- Administrative Home District Dropdown -->
+      <div class="cg-field-wrapper">
+        <app-select
+          label="Administrative Home District"
+          [options]="districtOptions"
+          [value]="personalForm.get('district')?.value"
+          (valueChange)="onDistrictChange($event)"
+          [required]="true"
+          placeholder="Select an official Sri Lankan district..."
+          [errorMessage]="getFieldError('district')"
+        ></app-select>
+        <span class="cg-field-hint">Choose from the 25 official administrative districts of Sri Lanka.</span>
+      </div>
+
+      <!-- Spoken Languages -->
+      <div class="cg-field-wrapper cg-field-wrapper--full">
+        <label class="cg-input-label" id="languages-label">
+          Spoken Languages
+          <span class="cg-label-hint">(Select all that you communicate in)</span>
+        </label>
+        <div class="cg-languages-picker" role="group" aria-labelledby="languages-label">
+          @for (lang of availableLanguages; track lang) {
+            <button
+              type="button"
+              class="cg-language-chip"
+              [class.cg-language-chip--selected]="selectedLanguages().includes(lang)"
+              (click)="toggleLanguage(lang)"
+              [attr.aria-pressed]="selectedLanguages().includes(lang)"
+            >
+              <span class="cg-chip-check" aria-hidden="true">
+                {{ selectedLanguages().includes(lang) ? '✓' : '+' }}
+              </span>
+              <span>{{ lang }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Traveler Bio -->
+      <div class="cg-field-wrapper cg-field-wrapper--full">
+        <div class="cg-textarea-header">
+          <label class="cg-input-label" for="cg-personal-bio">
+            Traveler Bio & Intro
+          </label>
+          <span
+            class="cg-char-counter"
+            [class.cg-char-counter--limit]="bioLength() >= 300"
+            aria-live="polite"
+          >
+            {{ bioLength() }} / 300 characters
+          </span>
+        </div>
+        <textarea
+          id="cg-personal-bio"
+          formControlName="bio"
+          rows="4"
+          maxlength="300"
+          class="cg-textarea"
+          placeholder="Share your travel interests, homestay preferences, favorite Sri Lankan foods, or heritage destinations..."
+          [class.has-error]="isFieldInvalid('bio')"
+        ></textarea>
+        @if (getFieldError('bio')) {
+          <span class="cg-error-message" role="alert">{{ getFieldError('bio') }}</span>
+        } @else {
+          <span class="cg-field-hint">Brief intro shared with homestay hosts upon booking.</span>
+        }
+      </div>
+    </div>
+
+    <!-- Form Footer Actions -->
+    <div class="cg-form-actions">
+      <app-button
+        variant="secondary"
+        type="button"
+        size="md"
+        (btnClick)="onCancel()"
+        [disabled]="isSaving()"
+      >
+        Cancel Changes
+      </app-button>
+
+      <app-button
+        variant="primary"
+        type="submit"
+        size="md"
+        [loading]="isSaving()"
+        [disabled]="personalForm.pristine && !isSaving()"
+      >
+        Save Personal Info
+      </app-button>
+    </div>
+  </form>
+</div>

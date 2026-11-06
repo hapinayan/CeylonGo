@@ -20,6 +20,12 @@ export const routes: Routes = [
           ),
         title: 'Design System & UI Components — CeylonGo',
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./features/profile/profile.routes').then((m) => m.PROFILE_ROUTES),
+        title: 'My Profile & Account Settings — CeylonGo',
+      },
     ],
   },
   {
