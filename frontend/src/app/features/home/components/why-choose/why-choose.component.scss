@@ -1,0 +1,92 @@
+@use 'styles/mixins' as mixins;
+
+.cg-why-choose-section {
+  padding: 2.5rem 0 3rem;
+  background-color: #ffffff;
+}
+
+.cg-why-header {
+  margin-bottom: 1.5rem;
+}
+
+.cg-why-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #0284c7;
+  text-transform: uppercase;
+}
+
+.cg-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+
+  @include mixins.respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mixins.respond-to('lg') {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.cg-metric-card {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+  padding: 0.875rem 0.5rem;
+  transition: transform var(--cg-transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.cg-metric-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--cg-transition-fast);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .cg-metric-card:hover & {
+    transform: scale(1.06);
+  }
+}
+
+.cg-metric-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-metric-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--cg-primary);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.cg-metric-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cg-text-primary);
+  margin-top: 0.15rem;
+  line-height: 1.25;
+}
+
+.cg-metric-subtext {
+  font-size: 0.6875rem;
+  color: var(--cg-text-muted);
+  margin-top: 0.1rem;
+}

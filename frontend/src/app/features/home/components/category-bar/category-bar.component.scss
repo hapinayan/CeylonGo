@@ -1,14 +1,14 @@
 @use 'styles/mixins' as mixins;
 
-.cg-features-section {
-  padding: var(--cg-space-12) 0;
+.cg-quick-benefits-section {
+  padding: 1.75rem 0 2rem;
   background-color: #ffffff;
 }
 
-.cg-features-grid {
+.cg-benefits-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--cg-space-6);
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
 
   @include mixins.respond-to('sm') {
     grid-template-columns: repeat(2, 1fr);
@@ -16,93 +16,58 @@
 
   @include mixins.respond-to('lg') {
     grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
 }
 
-.cg-feature-card {
-  position: relative;
+.cg-benefit-card {
   display: flex;
-  flex-direction: column;
-  padding: 1.75rem 1.5rem;
-  background-color: #ffffff;
-  border: 1px solid var(--cg-border);
-  border-radius: var(--cg-radius-card); // 12px standard card radius
-  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
-  text-decoration: none;
-  transition: transform var(--cg-transition-fast), box-shadow var(--cg-transition-fast), border-color var(--cg-transition-fast);
-
-  @include mixins.focus-ring;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  transition: transform var(--cg-transition-fast);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--cg-shadow-card-hover);
-    border-color: #cbd5e1;
-
-    .cg-feature-arrow-btn {
-      background-color: var(--cg-primary);
-      color: #ffffff;
-      transform: translateX(2px);
-    }
-
-    .cg-feature-title {
-      color: var(--cg-accent);
-    }
+    transform: translateY(-2px);
   }
 }
 
-.cg-feature-icon-box {
-  width: 54px;
-  height: 54px;
+.cg-benefit-icon-box {
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.25rem;
   flex-shrink: 0;
+  transition: transform var(--cg-transition-fast);
 
   svg {
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .cg-benefit-card:hover & {
+    transform: scale(1.05);
   }
 }
 
-.cg-feature-text {
-  flex: 1;
-  margin-bottom: 1.5rem;
+.cg-benefit-text {
+  display: flex;
+  flex-direction: column;
 }
 
-.cg-feature-title {
-  font-family: var(--cg-font-family-display);
-  font-size: var(--cg-font-size-card);
+.cg-benefit-title {
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cg-primary);
-  margin: 0 0 0.5rem;
-  line-height: var(--cg-line-height-tight);
-  transition: color var(--cg-transition-fast);
+  margin: 0 0 0.15rem;
+  line-height: 1.3;
 }
 
-.cg-feature-desc {
-  font-size: var(--cg-font-size-sm);
+.cg-benefit-desc {
+  font-size: 0.8125rem;
   color: var(--cg-text-secondary);
-  line-height: var(--cg-line-height-relaxed);
   margin: 0;
-}
-
-.cg-feature-arrow-btn {
-  align-self: flex-end;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1.5px solid var(--cg-border);
-  background-color: #ffffff;
-  color: var(--cg-text-secondary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--cg-transition-fast);
-
-  svg {
-    width: 15px;
-    height: 15px;
-  }
+  line-height: 1.4;
 }

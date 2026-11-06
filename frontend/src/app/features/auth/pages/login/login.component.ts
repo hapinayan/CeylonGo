@@ -2,12 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuthLayoutComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -17,6 +16,7 @@ export class LoginComponent {
   readonly showPassword = signal(false);
   readonly isSubmitting = signal(false);
   readonly demoSuccessMessage = signal<string | null>(null);
+  readonly googleNotice = signal<string | null>(null);
 
   readonly loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -66,7 +66,20 @@ export class LoginComponent {
     }, 600);
   }
 
+  onGoogleSignIn(): void {
+    this.googleNotice.set(
+      'Google Sign-In integration point is ready. Backend OAuth2 handler will be attached during FastAPI deployment.'
+    );
+    setTimeout(() => {
+      this.googleNotice.set(null);
+    }, 4500);
+  }
+
   dismissDemoBanner(): void {
     this.demoSuccessMessage.set(null);
+  }
+
+  dismissGoogleNotice(): void {
+    this.googleNotice.set(null);
   }
 }

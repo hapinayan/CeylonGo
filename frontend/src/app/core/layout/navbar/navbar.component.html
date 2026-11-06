@@ -44,11 +44,29 @@
             <span>AI Planner</span>
           </a>
         </li>
+        <li>
+          <a routerLink="/tour-guides" routerLinkActive="active" class="cg-nav-link">
+            <span>Tour Guides</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/community" routerLinkActive="active" class="cg-nav-link">
+            <span>Community</span>
+          </a>
+        </li>
       </ul>
     </nav>
 
-    <!-- Right Utilities (Location & User Profile) -->
+    <!-- Right Utilities (Search, Location & Authentication Controls) -->
     <div class="cg-navbar-actions">
+      <!-- Search Icon Trigger -->
+      <a routerLink="/homestays" class="cg-nav-search-btn" aria-label="Search homestays and experiences">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </a>
+
       <!-- Location Selector (Ref Design: 📍 Sri Lanka ⌵) -->
       <div class="cg-nav-dropdown-wrap">
         <button
@@ -85,8 +103,9 @@
         }
       </div>
 
-      <!-- User Profile (Ref Design: Avatar + Hapinayan ⌵) -->
+      <!-- Authentication Controls (Authenticated vs Guest) -->
       @if (isLoggedIn()) {
+        <!-- Authenticated User Profile Menu -->
         <div class="cg-nav-dropdown-wrap">
           <button
             type="button"
@@ -96,7 +115,11 @@
             aria-label="User Account Menu"
           >
             <div class="cg-user-avatar">
-              <span class="cg-user-initial">H</span>
+              @if (userAvatar()) {
+                <img [src]="userAvatar()!" [alt]="userName()" class="cg-avatar-img" />
+              } @else {
+                <span class="cg-user-initial">{{ userInitial() }}</span>
+              }
             </div>
             <span class="cg-user-name">{{ userName() }}</span>
             <svg class="cg-chevron-icon" [class.rotated]="isProfileDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -108,36 +131,30 @@
             <div class="cg-dropdown-menu cg-dropdown-menu--right" role="menu">
               <div class="cg-dropdown-header">
                 <span class="cg-dropdown-user-title">{{ userName() }}</span>
-                <span class="cg-dropdown-user-role">CeylonGo Traveler</span>
+                <span class="cg-dropdown-user-role">{{ userRole() }}</span>
               </div>
               <a routerLink="/profile" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span>My Profile</span>
+                <span>Profile</span>
               </a>
-              <a routerLink="/bookings" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                <span>Bookings & Trips</span>
-              </a>
-              <a routerLink="/saved" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                <span>Saved Wishlist</span>
-              </a>
-              <a routerLink="/design-system" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/></svg>
-                <span>Design System Guide</span>
+              <a routerLink="/settings" class="cg-dropdown-item" (click)="isProfileDropdownOpen.set(false)" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>Account Settings</span>
               </a>
               <hr class="cg-dropdown-divider" />
               <button type="button" class="cg-dropdown-item cg-dropdown-item--logout" (click)="logout()" role="menuitem">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                <span>Sign Out</span>
+                <span>Log Out</span>
               </button>
             </div>
           }
         </div>
       } @else {
-        <!-- Auth Actions if Logged Out -->
-        <a routerLink="/auth/login" class="cg-btn-sign-in">Sign In</a>
-        <a routerLink="/auth/register" class="cg-btn-sign-up">Sign Up</a>
+        <!-- Guest Visitors: Outlined navy Log In button & Orange Sign Up button -->
+        <div class="cg-auth-buttons">
+          <a routerLink="/auth/login" class="cg-btn-login">Log In</a>
+          <a routerLink="/auth/register" class="cg-btn-signup">Sign Up</a>
+        </div>
       }
 
       <!-- Mobile Hamburger Toggle -->
@@ -208,6 +225,16 @@
             </a>
           </li>
           <li>
+            <a routerLink="/tour-guides" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Tour Guides
+            </a>
+          </li>
+          <li>
+            <a routerLink="/community" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
+              Community
+            </a>
+          </li>
+          <li>
             <a routerLink="/design-system" routerLinkActive="active" class="cg-mobile-link" (click)="closeMobileMenu()">
               Design System Showcase
             </a>
@@ -219,16 +246,36 @@
         @if (isLoggedIn()) {
           <div class="cg-mobile-user-profile">
             <div class="cg-user-avatar">
-              <span class="cg-user-initial">H</span>
+              @if (userAvatar()) {
+                <img [src]="userAvatar()!" [alt]="userName()" class="cg-avatar-img" />
+              } @else {
+                <span class="cg-user-initial">{{ userInitial() }}</span>
+              }
             </div>
-            <div>
+            <div class="cg-mobile-user-info">
               <p class="cg-mobile-user-name">{{ userName() }}</p>
-              <button type="button" class="cg-mobile-sign-out" (click)="logout(); closeMobileMenu()">Sign Out</button>
+              <p class="cg-mobile-user-role">{{ userRole() }}</p>
             </div>
           </div>
+          <div class="cg-mobile-user-links">
+            <a routerLink="/profile" class="cg-mobile-sublink" (click)="closeMobileMenu()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span>Profile</span>
+            </a>
+            <a routerLink="/settings" class="cg-mobile-sublink" (click)="closeMobileMenu()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Account Settings</span>
+            </a>
+            <button type="button" class="cg-mobile-sign-out-btn" (click)="logout(); closeMobileMenu()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+              <span>Log Out</span>
+            </button>
+          </div>
         } @else {
-          <a routerLink="/auth/login" class="cg-mobile-btn-signin" (click)="closeMobileMenu()">Sign In</a>
-          <a routerLink="/auth/register" class="cg-mobile-btn-signup" (click)="closeMobileMenu()">Sign Up</a>
+          <div class="cg-mobile-auth-group">
+            <a routerLink="/auth/login" class="cg-mobile-btn-login" (click)="closeMobileMenu()">Log In</a>
+            <a routerLink="/auth/register" class="cg-mobile-btn-signup" (click)="closeMobileMenu()">Sign Up</a>
+          </div>
         }
       </div>
     </div>

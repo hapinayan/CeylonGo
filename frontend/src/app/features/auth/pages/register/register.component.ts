@@ -2,13 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout.component';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, AuthLayoutComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -19,6 +18,8 @@ export class RegisterComponent {
   readonly showConfirmPassword = signal(false);
   readonly isSubmitting = signal(false);
   readonly demoSuccessMessage = signal<string | null>(null);
+  readonly googleNotice = signal<string | null>(null);
+  readonly termsNotice = signal<string | null>(null);
 
   readonly registerForm: FormGroup = this.fb.group(
     {
@@ -102,7 +103,35 @@ export class RegisterComponent {
     }, 600);
   }
 
+  onGoogleSignUp(): void {
+    this.googleNotice.set(
+      'Google Sign-Up integration point is ready. Backend OAuth2 handler will be attached during FastAPI deployment.'
+    );
+    setTimeout(() => {
+      this.googleNotice.set(null);
+    }, 4500);
+  }
+
+  showTermsNotice(type: 'terms' | 'privacy'): void {
+    if (type === 'terms') {
+      this.termsNotice.set('CeylonGo Terms of Service: Standard community tourism guest guidelines and homestay safety protocols apply.');
+    } else {
+      this.termsNotice.set('CeylonGo Privacy Policy: Your account data and travel preferences are encrypted and protected under Sri Lankan data privacy standards.');
+    }
+    setTimeout(() => {
+      this.termsNotice.set(null);
+    }, 6000);
+  }
+
   dismissDemoBanner(): void {
     this.demoSuccessMessage.set(null);
+  }
+
+  dismissGoogleNotice(): void {
+    this.googleNotice.set(null);
+  }
+
+  dismissTermsNotice(): void {
+    this.termsNotice.set(null);
   }
 }

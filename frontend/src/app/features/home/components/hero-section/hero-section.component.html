@@ -1,18 +1,20 @@
 <section class="cg-hero-section">
-  <!-- Panoramic Sri Lanka Hero Photography (Sigiriya Rock) -->
+  <!-- Authentic Northern & Eastern Sri Lanka Photographic Composite -->
   <div class="cg-hero-bg">
     <img
       src="assets/images/hero/hero_banner.jpg"
-      alt="Scenic Sigiriya Rock Fortress at sunrise in Sri Lanka"
+      alt="Tourists exploring scenic Northern and Eastern Sri Lanka coastal views, heritage temple, and local craftsmanship"
       class="cg-hero-img"
+      fetchpriority="high"
+      loading="eager"
     />
     <div class="cg-hero-overlay"></div>
   </div>
 
   <div class="cg-container cg-hero-container">
-    <!-- Hero Heading & Tagline -->
+    <!-- Hero Heading & Tagline (Left Aligned) -->
     <div class="cg-hero-text">
-      <span class="cg-hero-kicker">DISCOVER SRI LANKA</span>
+      <span class="cg-hero-kicker">EXPLORE NORTHERN &amp; EASTERN SRI LANKA</span>
       <h1 class="cg-hero-title">
         Discover Local<br />
         Feel at <span class="cg-hero-title-accent">Home</span>
@@ -22,114 +24,166 @@
       </p>
     </div>
 
-    <!-- Rounded Pill AI Search & Travel Planning Bar (Matching Approved Reference Design) -->
-    <div class="cg-search-bar-wrap" role="search" aria-label="AI Travel Planner & Homestay Search">
-      <form class="cg-search-pill-form" (ngSubmit)="onGeneratePlan()">
-        <!-- AI Prompt Input -->
-        <div class="cg-search-field cg-search-field--prompt">
-          <span class="cg-field-icon cg-field-icon--sparkle" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
-              <path d="M5 3v4" />
-              <path d="M19 17v4" />
-              <path d="M3 5h4" />
-              <path d="M17 19h4" />
+    <!-- Floating White Pill Search Bar (Overlapping lower hero area) -->
+    <div class="cg-search-bar-wrap" role="search" aria-label="Find Homestays and Experiences">
+      <form class="cg-search-pill-form" (ngSubmit)="onSearch()">
+        <!-- 1. Destination Field -->
+        <div class="cg-search-field cg-search-field--dest">
+          <div class="cg-field-icon-wrap" aria-hidden="true">
+            <svg class="cg-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
-          </span>
-          <input
-            type="text"
-            class="cg-prompt-input"
-            placeholder="Plan my Sri Lanka trip with AI..."
-            [ngModel]="aiQuery()"
-            (ngModelChange)="aiQuery.set($event)"
-            name="aiQuery"
-            aria-label="Plan my Sri Lanka trip with AI"
-          />
-        </div>
+          </div>
+          <div class="cg-field-content">
+            <span class="cg-field-label">Where to?</span>
+            <input
+              type="text"
+              class="cg-field-input"
+              placeholder="Destination, city or region"
+              [ngModel]="destination()"
+              (ngModelChange)="destination.set($event)"
+              (focus)="isDestDropdownOpen.set(true)"
+              name="destination"
+              aria-label="Destination, city or region"
+              autocomplete="off"
+            />
+          </div>
 
-        <div class="cg-pill-divider" aria-hidden="true"></div>
-
-        <!-- Travel Dates Picker Trigger -->
-        <div class="cg-search-field cg-search-field--dropdown">
-          <button
-            type="button"
-            class="cg-dropdown-trigger-btn"
-            (click)="toggleDateDropdown()"
-            [attr.aria-expanded]="isDateDropdownOpen()"
-          >
-            <svg class="cg-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-              <line x1="16" x2="16" y1="2" y2="6" />
-              <line x1="8" x2="8" y1="2" y2="6" />
-              <line x1="3" x2="21" y1="10" y2="10" />
-            </svg>
-            <span class="cg-dropdown-text">{{ travelDates() || 'Travel Dates' }}</span>
-            <svg class="cg-chevron-sm" [class.rotated]="isDateDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-
-          @if (isDateDropdownOpen()) {
-            <div class="cg-pill-menu" role="menu">
-              <button type="button" class="cg-pill-menu-item" (click)="selectDateRange('This Weekend')">This Weekend</button>
-              <button type="button" class="cg-pill-menu-item" (click)="selectDateRange('Next Week (7 Days)')">Next Week (7 Days)</button>
-              <button type="button" class="cg-pill-menu-item" (click)="selectDateRange('Next Month (14 Days)')">Next Month (14 Days)</button>
-              <button type="button" class="cg-pill-menu-item" (click)="selectDateRange('Flexible / Summer')">Flexible Dates</button>
+          @if (isDestDropdownOpen()) {
+            <div class="cg-pill-dropdown-menu" role="menu">
+              <div class="cg-dropdown-title">Popular Destinations</div>
+              @for (dest of popularDestinations; track dest) {
+                <button
+                  type="button"
+                  class="cg-pill-dropdown-item"
+                  (click)="selectDestination(dest)"
+                  role="menuitem"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                  <span>{{ dest }}, Sri Lanka</span>
+                </button>
+              }
             </div>
           }
         </div>
 
         <div class="cg-pill-divider" aria-hidden="true"></div>
 
-        <!-- Guests Selector Trigger -->
+        <!-- 2. Check in / Travel Dates Field -->
         <div class="cg-search-field cg-search-field--dropdown">
+          <div class="cg-field-icon-wrap" aria-hidden="true">
+            <svg class="cg-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+              <line x1="16" x2="16" y1="2" y2="6" />
+              <line x1="8" x2="8" y1="2" y2="6" />
+              <line x1="3" x2="21" y1="10" y2="10" />
+            </svg>
+          </div>
           <button
             type="button"
-            class="cg-dropdown-trigger-btn"
-            (click)="toggleGuestDropdown()"
-            [attr.aria-expanded]="isGuestDropdownOpen()"
+            class="cg-field-trigger-btn"
+            (click)="toggleDateDropdown()"
+            [attr.aria-expanded]="isDateDropdownOpen()"
+            aria-label="Select check-in dates"
           >
-            <svg class="cg-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <div class="cg-field-content">
+              <span class="cg-field-label">Check in</span>
+              <span class="cg-field-val" [class.placeholder]="!checkIn()">
+                {{ checkIn() || 'Add dates' }}
+              </span>
+            </div>
+          </button>
+
+          @if (isDateDropdownOpen()) {
+            <div class="cg-pill-dropdown-menu" role="menu">
+              <div class="cg-dropdown-title">Suggested Dates</div>
+              @for (dateOpt of dateOptions; track dateOpt) {
+                <button
+                  type="button"
+                  class="cg-pill-dropdown-item"
+                  (click)="selectDateRange(dateOpt)"
+                  role="menuitem"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                  <span>{{ dateOpt }}</span>
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="cg-pill-divider" aria-hidden="true"></div>
+
+        <!-- 3. Guests Field -->
+        <div class="cg-search-field cg-search-field--dropdown">
+          <div class="cg-field-icon-wrap" aria-hidden="true">
+            <svg class="cg-field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
               <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
-            <span class="cg-dropdown-text">{{ guestCount() }} {{ guestCount() === 1 ? 'Guest' : 'Guests' }}</span>
-            <svg class="cg-chevron-sm" [class.rotated]="isGuestDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
+          </div>
+          <button
+            type="button"
+            class="cg-field-trigger-btn"
+            (click)="toggleGuestDropdown()"
+            [attr.aria-expanded]="isGuestDropdownOpen()"
+            aria-label="Select number of guests"
+          >
+            <div class="cg-field-content">
+              <span class="cg-field-label">Guests</span>
+              <div class="cg-field-val-wrap">
+                <span class="cg-field-val">{{ guestCount() }} {{ guestCount() === 1 ? 'guest' : 'guests' }}</span>
+                <svg class="cg-chevron-sm" [class.rotated]="isGuestDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </div>
           </button>
 
           @if (isGuestDropdownOpen()) {
-            <div class="cg-pill-menu cg-pill-menu--guests" role="menu">
+            <div class="cg-pill-dropdown-menu cg-pill-dropdown-menu--guests" role="menu">
               <div class="cg-guest-counter-row">
-                <span class="cg-guest-label">Travelers</span>
+                <div>
+                  <div class="cg-guest-label">Travelers</div>
+                  <div class="cg-guest-sublabel">Ages 13 or above</div>
+                </div>
                 <div class="cg-guest-counter">
-                  <button type="button" class="cg-count-btn" (click)="setGuests(guestCount() - 1)" [disabled]="guestCount() <= 1">-</button>
+                  <button
+                    type="button"
+                    class="cg-count-btn"
+                    (click)="setGuests(guestCount() - 1, $event)"
+                    [disabled]="guestCount() <= 1"
+                    aria-label="Decrease guests"
+                  >
+                    -
+                  </button>
                   <span class="cg-count-num">{{ guestCount() }}</span>
-                  <button type="button" class="cg-count-btn" (click)="setGuests(guestCount() + 1)">+</button>
+                  <button
+                    type="button"
+                    class="cg-count-btn"
+                    (click)="setGuests(guestCount() + 1, $event)"
+                    aria-label="Increase guests"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
           }
         </div>
 
-        <!-- Generate Plan CTA Button (Orange Pill Button with Plane Icon) -->
-        <button type="submit" class="cg-generate-plan-btn">
-          <svg class="cg-plan-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+        <!-- 4. Orange Search Button (Reference Design) -->
+        <button type="submit" class="cg-hero-search-btn" aria-label="Search homestays">
+          <svg class="cg-search-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
-          <span>Generate Plan</span>
+          <span>Search</span>
         </button>
       </form>
-
-      @if (searchSubmitted()) {
-        <div class="cg-hero-feedback" role="status">
-          Generating personalized itinerary for {{ guestCount() }} travelers...
-        </div>
-      }
     </div>
   </div>
 </section>
