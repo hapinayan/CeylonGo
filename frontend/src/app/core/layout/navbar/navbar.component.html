@@ -96,7 +96,7 @@
             aria-label="User Account Menu"
           >
             <div class="cg-user-avatar">
-              <span class="cg-user-initial">H</span>
+              <span class="cg-user-initial">{{ userInitial() }}</span>
             </div>
             <span class="cg-user-name">{{ userName() }}</span>
             <svg class="cg-chevron-icon" [class.rotated]="isProfileDropdownOpen()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -219,7 +219,7 @@
         @if (isLoggedIn()) {
           <div class="cg-mobile-user-profile">
             <div class="cg-user-avatar">
-              <span class="cg-user-initial">H</span>
+              <span class="cg-user-initial">{{ userInitial() }}</span>
             </div>
             <div>
               <p class="cg-mobile-user-name">{{ userName() }}</p>

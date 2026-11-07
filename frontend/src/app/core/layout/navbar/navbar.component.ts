@@ -1,5 +1,6 @@
-import { Component, signal, HostListener, ElementRef } from '@angular/core';
+import { Component, HostListener, ElementRef, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +10,27 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  private readonly elementRef = inject(ElementRef);
+  private readonly authService = inject(AuthService);
+
   protected readonly isMobileMenuOpen = signal(false);
   protected readonly isLocationDropdownOpen = signal(false);
   protected readonly isProfileDropdownOpen = signal(false);
   protected readonly selectedLocation = signal('Sri Lanka');
-  protected readonly userName = signal('Hapinayan');
   protected readonly userAvatar = signal('assets/branding/ceylongo-logo.png');
-  protected readonly isLoggedIn = signal(true);
+
+  // Reactive authentication state derived directly from AuthService
+  protected readonly isLoggedIn = this.authService.isAuthenticated;
+  protected readonly currentUser = this.authService.currentUser;
+
+  protected readonly userName = computed(() => {
+    return this.currentUser()?.name ?? '';
+  });
+
+  protected readonly userInitial = computed(() => {
+    const name = this.userName().trim();
+    return name ? name.charAt(0).toUpperCase() : 'U';
+  });
 
   protected readonly locations = [
     'Sri Lanka (All)',
@@ -28,8 +43,6 @@ export class NavbarComponent {
     'Nuwara Eliya',
     'Trincomalee & East',
   ];
-
-  constructor(private readonly elementRef: ElementRef) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -63,7 +76,8 @@ export class NavbarComponent {
   }
 
   protected logout(): void {
-    this.isLoggedIn.set(false);
+    this.authService.logout();
     this.isProfileDropdownOpen.set(false);
+    this.isMobileMenuOpen.set(false);
   }
 }
